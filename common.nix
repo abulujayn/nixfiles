@@ -31,7 +31,6 @@
 
       home.packages = with pkgs; [
         fastfetch
-        glances
         distrobox
 
         gcc
