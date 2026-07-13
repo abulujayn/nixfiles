@@ -8,10 +8,7 @@
   networking.nftables.enable = true;
 
   services.openssh.enable = true;
-  services.tailscale = {
-    enable = true;
-    authKeyFile = "/run/secrets/tailscale";
-  };
+  services.tailscale.enable = true;
 
   virtualisation.podman.enable = true;
 
