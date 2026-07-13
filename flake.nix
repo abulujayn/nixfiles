@@ -13,6 +13,8 @@
         home-manager.nixosModules.home-manager
         ./common.nix
         ./zerver.nix
+        ./z03/config.nix
+        ./zo3/hardware.nix
       ];
     };
   };
