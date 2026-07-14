@@ -8,6 +8,15 @@
     };
   };
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+    nixosConfigurations.mbpvm = nixpkgs.lib.nixosSystem {
+      modules = [
+        ./common.nix
+        ./zerver.nix
+        ./mbpvm/config.nix
+        ./hardware.nix
+      ];
+    };
+
     nixosConfigurations.z03 = nixpkgs.lib.nixosSystem {
       modules = [
         home-manager.nixosModules.home-manager
