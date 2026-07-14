@@ -13,7 +13,7 @@
         ./common.nix
         ./zerver.nix
         ./mbpvm/config.nix
-        ./hardware.nix
+        ./mbpvm/hardware.nix
       ];
     };
 
