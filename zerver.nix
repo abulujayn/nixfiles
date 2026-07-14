@@ -21,7 +21,6 @@
     linger = true;
     uid = 1000;
     extraGroups = [ "wheel" ];
-    initialPassword = "changemeplease";
   };
 
   system.autoUpgrade = {
