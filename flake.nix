@@ -23,6 +23,7 @@
         home-manager.nixosModules.home-manager
         ./common.nix
         ./zerver.nix
+        ./ts-exitnode.nix
         ./z03/config.nix
         ./z03/hardware.nix
       ];
