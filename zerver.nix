@@ -13,7 +13,18 @@
     allowedUDPPorts = [ config.services.tailscale.port ];
   };
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+    settings = {
+      KbdInteractiveAuthentication = false;
+      PasswordAuthentication = false;
+    };
+    extraConfig = ''
+      Match Address 100.64.0.0/10
+        PasswordAuthentication yes
+    '';
+  };
 
   services.tailscale.enable = true;
   systemd.services.tailscaled.serviceConfig.Environment = [
