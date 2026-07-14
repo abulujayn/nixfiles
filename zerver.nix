@@ -7,11 +7,18 @@
 
   networking.networkmanager.enable = true;
   networking.nftables.enable = true;
-  networking.firewall.enable = true;
-  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ config.services.tailscale.interfaceName ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
 
   services.openssh.enable = true;
+
   services.tailscale.enable = true;
+  systemd.services.tailscaled.serviceConfig.Environment = [
+    "TS_DEBUG_FIREWALL_MODE=nftables"
+  ];
 
   virtualisation.podman.enable = true;
 
