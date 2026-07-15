@@ -28,5 +28,16 @@
         ./a02/hardware.nix
       ];
     };
+
+    nixosConfigurations.a03 = nixpkgs.lib.nixosSystem {
+      modules = [
+        home-manager.nixosModules.home-manager
+        ./common.nix
+        ./zerver.nix
+        ./ts-exitnode.nix
+        ./a03/config.nix
+        ./a03/hardware.nix
+      ];
+    };
   };
 }
