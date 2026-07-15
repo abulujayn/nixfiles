@@ -24,6 +24,7 @@
         PasswordAuthentication yes
     '';
   };
+  security.pam.services.sshd.unixAuth = true;
 
   services.tailscale.enable = true;
   systemd.services.tailscaled.serviceConfig.Environment = [
