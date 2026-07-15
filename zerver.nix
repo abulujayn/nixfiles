@@ -17,14 +17,14 @@
     enable = true;
     settings = {
       KbdInteractiveAuthentication = false;
-      PasswordAuthentication = false;
     };
     extraConfig = ''
       Match Address 100.64.0.0/10
         PasswordAuthentication yes
+      Match all
+        PasswordAuthentication no
     '';
   };
-  security.pam.services.sshd.unixAuth = true;
 
   services.tailscale.enable = true;
   systemd.services.tailscaled.serviceConfig.Environment = [
