@@ -16,11 +16,17 @@
       home.username = "abulujayn";
       home.homeDirectory = "/home/abulujayn";
 
-      programs.git.settings = {
-        url."https://github.com/".insteadOf = "gh:";
-        user = {
-          name = "abulujayn";
-          email = "zaeem@parkar.au";
+      programs.git = {
+        enable = true;
+        settings = {
+          url."https://github.com/".insteadOf = [
+            "gh:"
+            "github:"
+          ];
+          user = {
+            name = "abulujayn";
+            email = "zaeem@parkar.au";
+          };
         };
       };
 
@@ -55,8 +61,6 @@
   };
 
   programs = {
-    git.enable = true;
-
     neovim = {
       enable = true;
       viAlias = true;
