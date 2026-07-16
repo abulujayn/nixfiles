@@ -30,6 +30,14 @@
         };
       };
 
+      programs.gh = {
+        enable = true;
+        gitCredentialHelper = {
+          enable = true;
+          hosts = [ "github.com" ];
+        };
+      };
+
       xdg.configFile."nvim" = {
         source = ./config/nvim;
         recursive = true;
