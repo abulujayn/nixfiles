@@ -45,4 +45,8 @@
     enable = true;
     flags = [ "--update-input" "nixpkgs" ];
   };
+
+  nixpkgs.overlays = [
+    (import ./overlays/netbootxyz-efi.nix)
+  ];
 }
