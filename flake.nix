@@ -30,13 +30,13 @@
           home-manager.nixosModules.home-manager
           ./common.nix
           ./zerver.nix
+          ./efi-live.nix
           ./mbpvm/config.nix
           ./mbpvm/hardware.nix
         ];
       };
 
       nixosConfigurations.a01 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
@@ -48,7 +48,6 @@
       };
 
       nixosConfigurations.a02 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
@@ -60,7 +59,6 @@
       };
 
       nixosConfigurations.a03 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
