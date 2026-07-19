@@ -59,11 +59,13 @@
       };
 
       nixosConfigurations.a03 = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit installer; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
           ./zerver.nix
           ./ts-exitnode.nix
+          ./efi-live.nix
           ./a03/config.nix
           ./a03/hardware.nix
         ];
