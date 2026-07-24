@@ -24,6 +24,18 @@
 
     in
     {
+      nixosConfigurations.titan = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit installer; };
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./common.nix
+          ./zerver.nix
+          ./efi-live.nix
+          ./titan/config.nix
+          ./titan/hardware.nix
+        ];
+      };
+
       nixosConfigurations.mbpvm = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit installer; };
         modules = [
