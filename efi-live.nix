@@ -1,6 +1,18 @@
-{ installer, lib, ... }:
+{ config, nixpkgsInput, lib, ... }:
 
 let
+  installer = nixpkgsInput.lib.nixosSystem {
+    modules = [
+      ({ modulesPath, ... }: {
+        imports = [
+          (modulesPath + "/installer/netboot/netboot-minimal.nix")
+        ];
+
+        nixpkgs.hostPlatform = config.nixpkgs.hostPlatform.system;
+        system.stateVersion = "26.05";
+      })
+    ];
+  };
   installerConfig = installer.config;
   installerBuild = installerConfig.system.build;
   installerKernel = "${installerBuild.kernel}/${installerConfig.system.boot.loader.kernelFile}";

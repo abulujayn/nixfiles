@@ -8,24 +8,9 @@
     };
   };
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
-    let
-      installer = nixpkgs.lib.nixosSystem {
-        modules = [
-          ({ modulesPath, ... }: {
-            imports = [
-              (modulesPath + "/installer/netboot/netboot-minimal.nix")
-            ];
-
-            nixpkgs.hostPlatform = "aarch64-linux";
-            system.stateVersion = "26.05";
-          })
-        ];
-      };
-
-    in
     {
       nixosConfigurations.titan = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
+        specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
@@ -37,7 +22,7 @@
       };
 
       nixosConfigurations.mbpvm = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
+        specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
@@ -49,7 +34,7 @@
       };
 
       nixosConfigurations.a01 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
+        specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
@@ -62,7 +47,7 @@
       };
 
       nixosConfigurations.a02 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
+        specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
@@ -75,7 +60,7 @@
       };
 
       nixosConfigurations.a03 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit installer; };
+        specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
           ./common.nix
