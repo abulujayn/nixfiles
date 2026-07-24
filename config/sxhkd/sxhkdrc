@@ -1,0 +1,43 @@
+# Terminal
+super + Return
+    kitty
+
+# Application launcher
+super + d
+    rofi -show drun
+
+# Close focused window
+super + shift + q
+    bspc node -c
+
+# Restart bspwm
+super + shift + r
+    bspc wm -r
+
+# Quit bspwm session
+super + shift + e
+    bspc quit
+
+# Focus windows
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+# Move windows
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+# Switch desktop
+super + {1-9}
+    bspc desktop -f '^{1-9}'
+
+# Move window to desktop
+super + shift + {1-9}
+    bspc node -d '^{1-9}' --follow
+
+# Toggle tiled/floating
+super + space
+    bspc node -t ~floating
+
+# Fullscreen
+super + f
+    bspc node -t ~fullscreen

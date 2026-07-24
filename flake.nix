@@ -15,6 +15,7 @@
           home-manager.nixosModules.home-manager
           ./modules/common.nix
           ./modules/efi-live.nix
+          ./modules/gui.nix
 
           ./hosts/titan/config.nix
           ./hosts/titan/hardware.nix
