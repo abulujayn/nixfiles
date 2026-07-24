@@ -11,4 +11,10 @@
 
   # for nvidia stuff
   nixpkgs.config.allowUnfree = true;
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "ignore";
+    HandleLidSwitchDocked = "ignore";
+  };
 }
