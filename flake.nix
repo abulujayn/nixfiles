@@ -13,11 +13,11 @@
         specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
-          ./common.nix
-          ./zerver.nix
-          ./efi-live.nix
-          ./titan/config.nix
-          ./titan/hardware.nix
+          ./modules/common.nix
+          ./modules/efi-live.nix
+
+          ./hosts/titan/config.nix
+          ./hosts/titan/hardware.nix
         ];
       };
 
@@ -25,11 +25,11 @@
         specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
-          ./common.nix
-          ./zerver.nix
-          ./efi-live.nix
-          ./mbpvm/config.nix
-          ./mbpvm/hardware.nix
+          ./modules/common.nix
+          ./modules/efi-live.nix
+
+          ./hosts/mbpvm/config.nix
+          ./hosts/mbpvm/hardware.nix
         ];
       };
 
@@ -37,12 +37,12 @@
         specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
-          ./common.nix
-          ./zerver.nix
-          ./ts-exitnode.nix
-          ./efi-live.nix
-          ./a01/config.nix
-          ./a01/hardware.nix
+          ./modules/common.nix
+          ./modules/ts-exitnode.nix
+          ./modules/efi-live.nix
+
+          ./hosts/a01/config.nix
+          ./hosts/a01/hardware.nix
         ];
       };
 
@@ -50,12 +50,12 @@
         specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
-          ./common.nix
-          ./zerver.nix
-          ./ts-exitnode.nix
-          ./efi-live.nix
-          ./a02/config.nix
-          ./a02/hardware.nix
+          ./modules/common.nix
+          ./modules/ts-exitnode.nix
+          ./modules/efi-live.nix
+
+          ./hosts/a02/config.nix
+          ./hosts/a02/hardware.nix
         ];
       };
 
@@ -63,12 +63,12 @@
         specialArgs = { nixpkgsInput = nixpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
-          ./common.nix
-          ./zerver.nix
-          ./ts-exitnode.nix
-          ./efi-live.nix
-          ./a03/config.nix
-          ./a03/hardware.nix
+          ./modules/common.nix
+          ./modules/ts-exitnode.nix
+          ./modules/efi-live.nix
+
+          ./hosts/a03/config.nix
+          ./hosts/a03/hardware.nix
         ];
       };
     };
