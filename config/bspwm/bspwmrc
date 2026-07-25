@@ -17,3 +17,8 @@ pgrep -x dunst >/dev/null || dunst &
 # PolicyKit authentication prompts
 pgrep -f polkit-gnome-authentication-agent-1 >/dev/null ||
   /run/current-system/sw/libexec/polkit-gnome-authentication-agent-1 &
+
+if [ -x "$HOME/.config/bspwm/lid-monitor.sh" ]; then
+    pkill -f "$HOME/.config/bspwm/lid-monitor.sh" 2>/dev/null
+    "$HOME/.config/bspwm/lid-monitor.sh" &
+fi

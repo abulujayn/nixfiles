@@ -17,4 +17,15 @@
     HandleLidSwitchExternalPower = "ignore";
     HandleLidSwitchDocked = "ignore";
   };
+  home-manager.users.abulujayn = {
+    xdg.configFile."bspwm/lid-monitor.sh" = {
+      executable = true;
+      source = ./lid-monitor.sh;
+    };
+
+    home.packages = with pkgs; [
+      acpid
+    ];
+  };
+  services.acpid.enable = true;
 }
