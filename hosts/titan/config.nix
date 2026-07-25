@@ -13,7 +13,7 @@
   nixpkgs.config.allowUnfree = true;
 
   services.logind.settings.Login = {
-    HandleLidSwitch = "suspend";
+    HandleLidSwitch = "ignore";
     HandleLidSwitchExternalPower = "ignore";
     HandleLidSwitchDocked = "ignore";
     IdleAction = "ignore";
