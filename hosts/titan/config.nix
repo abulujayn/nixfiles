@@ -16,6 +16,8 @@
     HandleLidSwitch = "suspend";
     HandleLidSwitchExternalPower = "ignore";
     HandleLidSwitchDocked = "ignore";
+    IdleAction = "ignore";
+    IdleActionSec = "0";
   };
   home-manager.users.abulujayn = {
     xdg.configFile."bspwm/lid-monitor.sh" = {
