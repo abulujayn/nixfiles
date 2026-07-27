@@ -7,6 +7,7 @@ let
         imports = [
           (modulesPath + "/installer/netboot/netboot-minimal.nix")
         ];
+        boot.zfs.forceImportRoot = false;
 
         nixpkgs.hostPlatform = config.nixpkgs.hostPlatform.system;
         system.stateVersion = "26.05";
@@ -31,6 +32,4 @@ in
     initrd   /efi/nixos-installer/initrd
     options  init=${installerBuild.toplevel}/init ${lib.concatStringsSep " " installerConfig.boot.kernelParams}
   '';
-
-  boot.zfs.forceImportRoot = false;
 }
