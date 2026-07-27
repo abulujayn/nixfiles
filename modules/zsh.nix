@@ -18,6 +18,11 @@
         autosuggestion.enable = true;
         historySubstringSearch.enable = true;
 
+        sessionVariables = {
+          GENCOMPL_FPATH = "${config.xdg.cacheHome}/zsh/completion-generator";
+          GENCOMPL_PY = "${pkgs.python3}/bin/python3";
+        };
+
         oh-my-zsh = {
           enable = true;
           theme = "";
