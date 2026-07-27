@@ -19,15 +19,4 @@
     IdleAction = "ignore";
     IdleActionSec = "0";
   };
-  home-manager.users.abulujayn = {
-    xdg.configFile."bspwm/lid-monitor.sh" = {
-      executable = true;
-      source = ./lid-monitor.sh;
-    };
-
-    home.packages = with pkgs; [
-      acpid
-    ];
-  };
-  services.acpid.enable = true;
 }
