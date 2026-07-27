@@ -40,7 +40,24 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "zsh-completion-generator": "zsh-completion-generator"
+      }
+    },
+    "zsh-completion-generator": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1668354547,
+        "narHash": "sha256-OoK+LMUaFYxLrGG6awb5fU97jXNT0SFACO3AbLheZNU=",
+        "owner": "RobSis",
+        "repo": "zsh-completion-generator",
+        "rev": "d01700d037e87db97f51c5da201d63a3fef7e9f6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RobSis",
+        "repo": "zsh-completion-generator",
+        "type": "github"
       }
     }
   },
