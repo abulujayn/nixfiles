@@ -8,6 +8,10 @@
   home-manager.users.abulujayn =
     { config, pkgs, ... }:
     {
+      imports = [
+        ../lib/zsh-styles.nix
+      ];
+
       programs.zsh = {
         enable = true;
         dotDir = "${config.xdg.configHome}/zsh";
