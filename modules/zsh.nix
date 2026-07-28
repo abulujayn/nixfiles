@@ -8,14 +8,10 @@
   home-manager.users.abulujayn =
     { config, pkgs, ... }:
     {
-      imports = [
-        ../lib/zsh-styles.nix
-      ];
-
       programs.zsh = {
         enable = true;
         dotDir = "${config.xdg.configHome}/zsh";
-        initContent = "source ${../config/zsh/prompt.zsh}";
+        initContent = "source ${../config/zsh/init.zsh}";
         autosuggestion.enable = true;
         historySubstringSearch.enable = true;
 
@@ -55,19 +51,6 @@
               + "/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
             phase = "last";
           }
-        ];
-
-        zstyles = [
-          "':completion:*' completer _expand _complete _ignored _correct"
-          "':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'"
-          "':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'"
-          "':completion:*' menu select=1"
-          "':completion:*' original true"
-          "':completion:*' select-prompt '%SScrolling active: current selection at %p%s'"
-          "':completion:*' squeeze-slashes true"
-
-          "':omz:plugins:ssh-agent' quiet yes"
-          "':omz:plugins:ssh-agent' lazy yes"
         ];
 
         history = {
