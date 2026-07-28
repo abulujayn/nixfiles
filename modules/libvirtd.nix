@@ -11,8 +11,10 @@
       vhostUserPackages = [ pkgs.virtiofsd ];
     };
   };
-
   virtualisation.spiceUSBRedirection.enable = true;
+  networking.firewall.trustedInterfaces = [
+    "virbr0"
+  ];
 
   users.users = {
     abulujayn.extraGroups = [ "libvirtd" ];
