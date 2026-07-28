@@ -14,5 +14,8 @@
 
   virtualisation.spiceUSBRedirection.enable = true;
 
-  users.users.abulujayn.extraGroups = [ "libvirtd" ];
+  users.users = {
+    abulujayn.extraGroups = [ "libvirtd" ];
+    libvirtdbus.extraGroups = [ "libvirtd" ];
+  };
 }
