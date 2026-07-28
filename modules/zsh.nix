@@ -15,6 +15,7 @@
       programs.zsh = {
         enable = true;
         dotDir = "${config.xdg.configHome}/zsh";
+        initContent = "source ${../config/zsh/prompt.zsh}";
         autosuggestion.enable = true;
         historySubstringSearch.enable = true;
 
