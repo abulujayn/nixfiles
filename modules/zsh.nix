@@ -22,7 +22,6 @@
 
         oh-my-zsh = {
           enable = true;
-          theme = "";
           plugins = [
             "command-not-found"
             "git"
