@@ -4,6 +4,9 @@
   networking.hostName = "titan";
   system.autoUpgrade.flake = "github:abulujayn/nixfiles#titan";
 
+  home-manager.users.abulujayn.programs.zsh.initContent =
+    lib.mkAfter "source ${./battery-prompt.zsh}";
+
   services.openssh.extraConfig = ''
     Match Address 172.16.97.1
       PasswordAuthentication yes
