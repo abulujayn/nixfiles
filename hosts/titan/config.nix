@@ -15,6 +15,19 @@
   # for nvidia stuff
   nixpkgs.config.allowUnfree = true;
 
+  services.cockpit = {
+    enable = true;
+    plugins = [ pkgs.cockpit-machines ];
+    allowed-origins = [
+      "http://titan:9090"
+      "http://100.125.195.123:9090"
+    ];
+    settings.WebService.AllowUnencrypted = true;
+  };
+
+  # cockpit-machines uses virt-install and virt-xml to create and edit guests.
+  environment.systemPackages = [ pkgs.virt-manager ];
+
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
     HandleLidSwitchExternalPower = "ignore";
