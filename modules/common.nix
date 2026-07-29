@@ -52,7 +52,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flags = [ "--update-input" "nixpkgs" ];
+    flags = [ "--update-input" "nixpkgs" "--no-write-lock-file" ];
   };
 
   home-manager = {
