@@ -9,7 +9,7 @@
     { config, pkgs, ... }:
     {
       imports = [
-        ../lib/zsh-styles.nix
+        ../lib/zsh-options.nix
       ];
 
       programs.zsh = {
