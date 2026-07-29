@@ -1,6 +1,15 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+    ./hardware.nix
+
+    ../../modules/common.nix
+    ../../modules/efi-live.nix
+    ../../modules/cockpit.nix
+    ../../modules/libvirtd.nix
+  ];
+
   networking.hostName = "titan";
   system.autoUpgrade.flake = "github:abulujayn/nixfiles#titan";
 

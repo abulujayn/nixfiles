@@ -21,13 +21,7 @@
         };
         modules = [
           home-manager.nixosModules.home-manager
-          ./modules/common.nix
-          ./modules/cockpit.nix
-          ./modules/efi-live.nix
-          ./modules/libvirtd.nix
-
           ./hosts/titan/config.nix
-          ./hosts/titan/hardware.nix
         ];
       };
 
@@ -38,11 +32,7 @@
         };
         modules = [
           home-manager.nixosModules.home-manager
-          ./modules/common.nix
-          ./modules/efi-live.nix
-
           ./hosts/mbpvm/config.nix
-          ./hosts/mbpvm/hardware.nix
         ];
       };
 
@@ -53,12 +43,7 @@
         };
         modules = [
           home-manager.nixosModules.home-manager
-          ./modules/common.nix
-          ./modules/ts-exitnode.nix
-          ./modules/efi-live.nix
-
           ./hosts/a01/config.nix
-          ./hosts/a01/hardware.nix
         ];
       };
 
@@ -69,12 +54,7 @@
         };
         modules = [
           home-manager.nixosModules.home-manager
-          ./modules/common.nix
-          ./modules/ts-exitnode.nix
-          ./modules/efi-live.nix
-
           ./hosts/a02/config.nix
-          ./hosts/a02/hardware.nix
         ];
       };
 
@@ -85,12 +65,7 @@
         };
         modules = [
           home-manager.nixosModules.home-manager
-          ./modules/common.nix
-          ./modules/ts-exitnode.nix
-          ./modules/efi-live.nix
-
           ./hosts/a03/config.nix
-          ./hosts/a03/hardware.nix
         ];
       };
     };
