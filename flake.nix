@@ -22,6 +22,7 @@
         modules = [
           home-manager.nixosModules.home-manager
           ./modules/common.nix
+          ./modules/cockpit.nix
           ./modules/efi-live.nix
           ./modules/libvirtd.nix
 
