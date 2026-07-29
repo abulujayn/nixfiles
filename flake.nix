@@ -22,6 +22,12 @@
 
         modules = [
           home-manager.nixosModules.home-manager
+
+          {
+            networking.hostName = host;
+            system.autoUpgrade.flake = "github:abulujayn/nixfiles#${host}";
+          }
+
           ./hosts/${host}/config.nix
         ];
       };

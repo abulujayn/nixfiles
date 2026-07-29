@@ -8,7 +8,4 @@
     ../../modules/efi-live.nix
     ../../modules/ts-exitnode.nix
   ];
-
-  networking.hostName = "a03";
-  system.autoUpgrade.flake = "github:abulujayn/nixfiles#a03";
 }

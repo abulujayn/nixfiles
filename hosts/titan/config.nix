@@ -10,9 +10,6 @@
     ../../modules/libvirtd.nix
   ];
 
-  networking.hostName = "titan";
-  system.autoUpgrade.flake = "github:abulujayn/nixfiles#titan";
-
   home-manager.users.abulujayn.programs.zsh.initContent =
     lib.mkAfter "source ${./battery-prompt.zsh}";
 
