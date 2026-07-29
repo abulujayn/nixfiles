@@ -12,61 +12,27 @@
       flake = false;
     };
   };
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, ... }:
+    let
+      mkHost = host: nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          nixpkgsInput = nixpkgs;
+        };
+
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./hosts/${host}/config.nix
+        ];
+      };
+    in
     {
-      nixosConfigurations.titan = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          nixpkgsInput = nixpkgs;
-        };
-        modules = [
-          home-manager.nixosModules.home-manager
-          ./hosts/titan/config.nix
-        ];
-      };
-
-      nixosConfigurations.mbpvm = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          nixpkgsInput = nixpkgs;
-        };
-        modules = [
-          home-manager.nixosModules.home-manager
-          ./hosts/mbpvm/config.nix
-        ];
-      };
-
-      nixosConfigurations.a01 = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          nixpkgsInput = nixpkgs;
-        };
-        modules = [
-          home-manager.nixosModules.home-manager
-          ./hosts/a01/config.nix
-        ];
-      };
-
-      nixosConfigurations.a02 = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          nixpkgsInput = nixpkgs;
-        };
-        modules = [
-          home-manager.nixosModules.home-manager
-          ./hosts/a02/config.nix
-        ];
-      };
-
-      nixosConfigurations.a03 = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          nixpkgsInput = nixpkgs;
-        };
-        modules = [
-          home-manager.nixosModules.home-manager
-          ./hosts/a03/config.nix
-        ];
-      };
+      nixosConfigurations = nixpkgs.lib.genAttrs [
+        "titan"
+        "mbpvm"
+        "a01"
+        "a02"
+        "a03"
+      ] mkHost;
     };
 }
