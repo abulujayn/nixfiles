@@ -52,7 +52,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flags = [ "--no-write-lock-file" "--refresh" ];
+    flags = [ "--no-write-lock-file" ];
   };
 
   home-manager = {
