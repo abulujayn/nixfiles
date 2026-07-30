@@ -35,7 +35,6 @@
     {
       nixosConfigurations = nixpkgs.lib.genAttrs [
         "titan"
-        "mbpvm"
         "a01"
         "a02"
         "a03"
