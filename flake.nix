@@ -7,12 +7,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     zsh-completion-generator = {
       url = "github:RobSis/zsh-completion-generator";
       flake = false;
     };
   };
-  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nix-darwin, ... }:
     let
       mkHost = host: nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -31,6 +36,23 @@
           ./hosts/${host}/config.nix
         ];
       };
+
+      mkDarwinHost = host: nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          inherit inputs;
+          nixpkgsInput = nixpkgs;
+        };
+
+        modules = [
+          home-manager.darwinModules.home-manager
+
+          {
+            networking.hostName = host;
+          }
+
+          ./hosts/${host}/config.nix
+        ];
+      };
     in
     {
       nixosConfigurations = nixpkgs.lib.genAttrs [
@@ -39,5 +61,7 @@
         "a02"
         "a03"
       ] mkHost;
+
+      darwinConfigurations.mbp = mkDarwinHost "mbp";
     };
 }
