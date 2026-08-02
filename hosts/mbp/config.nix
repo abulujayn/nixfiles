@@ -7,7 +7,10 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  system.primaryUser = "abulujayn";
+  system = {
+    primaryUser = "abulujayn";
+    stateVersion = 7;
+  };
 
   users.users.abulujayn = {
     createHome = true;
