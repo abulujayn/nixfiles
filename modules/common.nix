@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [
-    ./zsh.nix
-  ];
-
   system.stateVersion = "26.05";
 
   boot.loader.systemd-boot.enable = true;
@@ -15,30 +11,16 @@
 
   networking.networkmanager.enable = true;
   networking.nftables.enable = true;
-  networking.firewall = {
-    enable = true;
-    trustedInterfaces = [ config.services.tailscale.interfaceName ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
-  };
+  networking.firewall.enable = true;
   services.resolved.enable = true;
 
   services.openssh = {
     enable = true;
     settings = {
       KbdInteractiveAuthentication = false;
+      PasswordAuthentication = false;
     };
-    extraConfig = ''
-      Match Address 100.64.0.0/10
-        PasswordAuthentication yes
-      Match all
-        PasswordAuthentication no
-    '';
   };
-
-  services.tailscale.enable = true;
-  systemd.services.tailscaled.serviceConfig.Environment = [
-    "TS_DEBUG_FIREWALL_MODE=nftables"
-  ];
 
   virtualisation.podman.enable = true;
 
@@ -87,42 +69,10 @@
         };
       };
 
-      xdg.configFile."nvim" = {
-        source = ../config/nvim;
-        recursive = true;
-      };
-
       home.packages = with pkgs; [
         fastfetch
         distrobox
-
-        gcc
-        gnumake
-        tree-sitter
-        lazygit
       ];
-    };
-
-    users.root = {
-      home.stateVersion = "26.05";
-
-      programs.neovim.extraConfig = ''
-        set tabstop=2 softtabstop=2 shiftwidth=2
-        set expandtab
-        set number ruler
-        set autoindent smartindent
-        syntax enable
-        filetype plugin indent on
-      '';
-    };
-  };
-
-  programs = {
-    neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      defaultEditor = true;
     };
   };
 

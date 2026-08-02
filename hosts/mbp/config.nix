@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../../modules/common.nix
     ../../modules/zsh.nix
   ];
 
@@ -10,10 +9,16 @@
 
   system = {
     primaryUser = "abulujayn";
-    stateVersion = 6;
+    autoUpgrade = {
+      enable = true;
+      flags = [ "--no-write-lock-file" ];
+    };
   };
 
-  users.users.abulujayn.home = "/Users/abulujayn";
+  users.users.abulujayn = {
+    createHome = true;
+    home = "/Users/abulujayn";
+  };
 
   home-manager = {
     useGlobalPkgs = true;
@@ -23,6 +28,28 @@
       home.stateVersion = "26.05";
       home.username = "abulujayn";
       home.homeDirectory = "/Users/abulujayn";
+
+      programs.git = {
+        enable = true;
+        settings = {
+          url."https://github.com/".insteadOf = [
+            "gh:"
+            "github:"
+          ];
+          user = {
+            name = "abulujayn";
+            email = "zaeem@parkar.au";
+          };
+        };
+      };
+
+      programs.gh = {
+        enable = true;
+        gitCredentialHelper = {
+          enable = true;
+          hosts = [ "github.com" ];
+        };
+      };
     };
   };
 

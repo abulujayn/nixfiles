@@ -5,6 +5,9 @@
     ./hardware.nix
 
     ../../modules/common.nix
+    ../../modules/neovim.nix
+    ../../modules/zsh.nix
+    ../../modules/tailscale.nix
     ../../modules/efi-live.nix
     ../../modules/cockpit.nix
     ../../modules/libvirtd.nix
