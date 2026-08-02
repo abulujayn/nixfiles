@@ -26,7 +26,7 @@ in
   };
 
   boot.loader.systemd-boot.extraEntries."nixos-installer.conf" = ''
-    title    Recovery 26.05
+    title    NixOS Recovery
     sort-key o_nixos-installer
     linux    /efi/nixos-installer/linux
     initrd   /efi/nixos-installer/initrd
