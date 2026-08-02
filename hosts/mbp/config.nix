@@ -13,6 +13,8 @@ in
 
     ./system-defaults.nix
     ./pam.nix
+
+    ./homebrew.nix
     ./work.nix
   ];
 
