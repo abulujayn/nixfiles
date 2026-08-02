@@ -48,6 +48,8 @@
 
           {
             networking.hostName = host;
+            networking.computerName = host;
+            networking.localHostName = host;
           }
 
           ./hosts/${host}/config.nix

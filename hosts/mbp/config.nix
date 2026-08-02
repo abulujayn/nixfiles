@@ -1,11 +1,26 @@
 { pkgs, ... }:
 
+let
+  aldente = pkgs.callPackage ../../darwin-apps/aldente.nix { };
+  core-monitor = pkgs.callPackage ../../darwin-apps/core-monitor.nix { };
+  notunes = pkgs.callPackage ../../darwin-apps/notunes.nix { };
+  thaw = pkgs.callPackage ../../darwin-apps/thaw.nix { };
+in
+
 {
   imports = [
     ../../modules/zsh.nix
+
+    ./system-defaults.nix
+    ./pam.nix
+    ./work.nix
   ];
 
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs = {
+    hostPlatform = "aarch64-darwin";
+    config.allowUnfreePredicate = pkg:
+      builtins.elem (pkgs.lib.getName pkg) [ "aldente" ];
+  };
 
   system = {
     primaryUser = "abulujayn";
@@ -16,6 +31,13 @@
     createHome = true;
     home = "/Users/abulujayn";
   };
+
+  environment.systemPackages = [
+    aldente
+    core-monitor
+    notunes
+    thaw
+  ];
 
   home-manager = {
     useGlobalPkgs = true;
@@ -47,8 +69,24 @@
           hosts = [ "github.com" ];
         };
       };
+
+      home.packages = with pkgs; [
+        zed-editor-fhs
+        iterm2
+        tailscale
+        chatgpt
+        darwin.xcode
+        keepassxc
+        iloader
+
+        mole-cleaner
+        android-tools
+        step-cli
+      ];
     };
   };
+
+  power.sleep.allowSleepByPowerButton = true;
 
   nix.settings.experimental-features = [
     "nix-command"
