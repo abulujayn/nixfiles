@@ -7,13 +7,7 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  system = {
-    primaryUser = "abulujayn";
-    autoUpgrade = {
-      enable = true;
-      flags = [ "--no-write-lock-file" ];
-    };
-  };
+  system.primaryUser = "abulujayn";
 
   users.users.abulujayn = {
     createHome = true;
