@@ -54,11 +54,12 @@
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
       CreateDesktop = false;
-      FXDefaultSearchScope = "SCcf";
       NewWindowTarget = "Home";
       ShowPathbar = true;
       ShowStatusBar = true;
+      FXDefaultSearchScope = "SCcf";
       _FXSortFoldersFirst = true;
+      _FXShowPosixPathInTitle = false;
     };
 
     loginwindow.GuestEnabled = false;
