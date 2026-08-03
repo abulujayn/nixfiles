@@ -20,8 +20,7 @@ in
 
   nixpkgs = {
     hostPlatform = "aarch64-darwin";
-    config.allowUnfreePredicate = pkg:
-      builtins.elem (pkgs.lib.getName pkg) [ "aldente" ];
+    config.allowUnfree = true;
   };
 
   system = {
@@ -73,11 +72,10 @@ in
       };
 
       home.packages = with pkgs; [
-        zed-editor-fhs
+        zed-editor
         iterm2
         tailscale
         chatgpt
-        darwin.xcode
         keepassxc
         iloader
 

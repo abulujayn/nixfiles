@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 
 {
-  security.pam.service.sudo_local = {
+  security.pam.services.sudo_local = {
     enable = true;
 
     reattach = true;

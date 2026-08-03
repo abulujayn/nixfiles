@@ -7,10 +7,10 @@
       show-recents = false;
 
       persistent-apps = [
-        { app = "Safari"; }
-        { app = "iTerm2"; }
-        { app = "Zed"; }
-        { app = "System Settings"; }
+        "/Applications/Safari.app"
+        "${pkgs.iterm2}/Applications/iTerm2.app"
+        "${pkgs.zed-editor}/Applications/Zed.app"
+        "/System/Applications/System Settings.app"
       ];
 
       persistent-others = [
@@ -43,12 +43,11 @@
     };
 
     controlcenter = {
-      # 24 = don't show
-      Bluetooth = 24;
-      Display = 24;
-      FocusMode = 24;
-      NowPlaying = 24;
-      Sound = 24;
+      Bluetooth = false;
+      Display = false;
+      FocusModes = false;
+      NowPlaying = false;
+      Sound = false;
     };
 
     finder = {
