@@ -3,6 +3,7 @@
 let
   aldente = pkgs.callPackage ../../darwin-apps/aldente.nix { };
   core-monitor = pkgs.callPackage ../../darwin-apps/core-monitor.nix { };
+  jump-desktop = pkgs.callPackage ../../darwin-apps/jump-desktop.nix { };
   notunes = pkgs.callPackage ../../darwin-apps/notunes.nix { };
   thaw = pkgs.callPackage ../../darwin-apps/thaw.nix { };
 in
@@ -36,6 +37,7 @@ in
   environment.systemPackages = with pkgs; [
     aldente
     core-monitor
+    jump-desktop
     notunes
     thaw
 

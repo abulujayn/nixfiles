@@ -7,7 +7,7 @@
       show-recents = false;
 
       persistent-apps = [
-        "/Applications/Safari.app"
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
         "/System/Applications/Utilities/Terminal.app"
         "${pkgs.zed-editor}/Applications/Zed.app"
         "/System/Applications/System Settings.app"
