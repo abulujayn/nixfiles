@@ -8,7 +8,7 @@
 
       persistent-apps = [
         "/Applications/Safari.app"
-        "${pkgs.iterm2}/Applications/iTerm2.app"
+        "/System/Applications/Utilities/Terminal.app"
         "${pkgs.zed-editor}/Applications/Zed.app"
         "/System/Applications/System Settings.app"
       ];

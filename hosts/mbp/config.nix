@@ -33,11 +33,22 @@ in
     home = "/Users/abulujayn";
   };
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     aldente
     core-monitor
     notunes
     thaw
+
+    zed-editor
+    iterm2
+    tailscale
+    chatgpt
+    keepassxc
+    iloader
+
+    mole-cleaner
+    android-tools
+    step-cli
   ];
 
   home-manager = {
@@ -70,19 +81,6 @@ in
           hosts = [ "github.com" ];
         };
       };
-
-      home.packages = with pkgs; [
-        zed-editor
-        iterm2
-        tailscale
-        chatgpt
-        keepassxc
-        iloader
-
-        mole-cleaner
-        android-tools
-        step-cli
-      ];
     };
   };
 
