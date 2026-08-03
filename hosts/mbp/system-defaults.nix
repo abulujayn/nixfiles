@@ -58,7 +58,6 @@
       NewWindowTarget = "Home";
       ShowPathbar = true;
       ShowStatusBar = true;
-      _FXShowPosixPathInTitle = true;
       _FXSortFoldersFirst = true;
     };
 
