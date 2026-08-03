@@ -25,12 +25,17 @@
     settings = {
       KbdInteractiveAuthentication = false;
     };
-    extraConfig = ''
-      Match Address 100.64.0.0/10
-        PasswordAuthentication yes
-      Match all
-        PasswordAuthentication no
-    '';
+    extraConfig = lib.mkMerge [
+      ''
+        Match Address 100.64.0.0/10
+          PasswordAuthentication yes
+      ''
+
+      (lib.mkAfter ''
+        Match all
+          PasswordAuthentication no
+      '')
+    ];
   };
 
   systemd.services.tailscaled.serviceConfig.Environment = [
