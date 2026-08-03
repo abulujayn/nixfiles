@@ -91,5 +91,7 @@
       closeViewScrollWheelToggle = true;
       closeViewZoomFollowsFocus = true;
     };
+
+    WindowManager.EnableStandardClickToShowDesktop = false;
   };
 }
