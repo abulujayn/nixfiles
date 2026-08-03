@@ -11,8 +11,14 @@
 
   networking.networkmanager.enable = true;
   networking.nftables.enable = true;
-  networking.firewall.enable = true;
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ config.services.tailscale.interfaceName ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
   services.resolved.enable = true;
+
+  services.tailscale.enable = true;
 
   services.openssh = {
     enable = true;
@@ -20,10 +26,16 @@
       KbdInteractiveAuthentication = false;
     };
     extraConfig = ''
+      Match Address 100.64.0.0/10
+        PasswordAuthentication yes
       Match all
         PasswordAuthentication no
     '';
   };
+
+  systemd.services.tailscaled.serviceConfig.Environment = [
+    "TS_DEBUG_FIREWALL_MODE=nftables"
+  ];
 
   virtualisation.podman.enable = true;
 
