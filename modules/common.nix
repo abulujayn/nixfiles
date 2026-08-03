@@ -57,6 +57,12 @@
     flags = [ "--no-write-lock-file" ];
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 7d";
+  };
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
