@@ -18,8 +18,11 @@
     enable = true;
     settings = {
       KbdInteractiveAuthentication = false;
-      PasswordAuthentication = false;
     };
+    extraConfig = ''
+      Match all
+        PasswordAuthentication no
+    '';
   };
 
   virtualisation.podman.enable = true;

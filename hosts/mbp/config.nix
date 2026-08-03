@@ -13,6 +13,7 @@ in
     ../../modules/zsh.nix
 
     ./system-defaults.nix
+    ./iterm.nix
     ./pam.nix
 
     ./homebrew.nix
