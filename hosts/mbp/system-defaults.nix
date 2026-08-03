@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ config, inputs, pkgs, ... }:
 
 {
   system.defaults = {
@@ -14,7 +14,7 @@
       ];
 
       persistent-others = [
-        { folder = "/Users/@username@/Downloads"; }
+        { folder = "/Users/${config.system.primaryUser}/Downloads"; }
       ];
     };
 
