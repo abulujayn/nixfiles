@@ -57,10 +57,14 @@
     flags = [ "--no-write-lock-file" ];
   };
 
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 7d";
+  programs.nh = {
+    enable = true;
+
+    clean = {
+      enable = true;
+      dates = "daily";
+      extraArgs = "--keep 5 --keep-since 7d --no-direnv";
+    };
   };
 
   home-manager = {
