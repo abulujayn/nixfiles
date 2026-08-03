@@ -40,7 +40,6 @@ in
     thaw
 
     zed-editor
-    iterm2
     tailscale
     chatgpt
     keepassxc
