@@ -51,6 +51,7 @@ in
     mole-cleaner
     android-tools
     step-cli
+    _7zz
   ];
 
   home-manager = {
