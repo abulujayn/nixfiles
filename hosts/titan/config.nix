@@ -13,7 +13,7 @@
   ];
 
   home-manager.users.${username}.programs.zsh.initContent =
-    lib.mkAfter "source ${./battery-prompt.zsh}";
+    lib.mkOrder 950 "source ${./battery-prompt.zsh}";
 
   services.openssh.extraConfig = ''
     Match Address 172.16.97.1

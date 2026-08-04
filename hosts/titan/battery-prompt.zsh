@@ -1,46 +1,32 @@
-_update_battery_prompt() {
-  local battery capacity battery_status colour label
+prompt_titan_battery() {
+  local battery capacity battery_status label
   local -a batteries
 
   batteries=(/sys/class/power_supply/BAT*(N))
-  if (( ${#batteries} == 0 )); then
-    RPROMPT=
-    return
-  fi
+  (( ${#batteries} )) || return
 
   battery=$batteries[1]
-  if [[ ! -r $battery/capacity || ! -r $battery/status ]]; then
-    RPROMPT=
-    return
-  fi
+  [[ -r $battery/capacity && -r $battery/status ]] || return
 
   read -r capacity < $battery/capacity
   read -r battery_status < $battery/status
 
   case $battery_status in
-    Charging)       colour=cyan;  label=charging ;;
-    Full)           colour=green; label=full ;;
+    Charging)       label=charging ;;
+    Full)           label=full ;;
     "Not charging") label=idle ;;
     Discharging)    label=discharging ;;
     *)              label=${(L)battery_status} ;;
   esac
 
-  if [[ -z $colour ]]; then
-    (( capacity <= 15 )) && colour=red ||
-    (( capacity <= 30 )) && colour=yellow ||
-    colour=green
-  fi
-
-  RPROMPT="%F{$colour}[battery $capacity%% · $label]%f"
+  p10k segment -b 2 -f 0 -t $'\UF0079 '"$capacity%% [$label]"
 }
 
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd _update_battery_prompt
+typeset -ga P10K_HOST_RIGHT_PROMPT_ELEMENTS=(titan_battery)
 
 # Refresh the right prompt while ZLE is idle. Defining TRAPALRM prevents
 # TMOUT from logging out the shell.
 TMOUT=30
 TRAPALRM() {
-  _update_battery_prompt
   zle reset-prompt
 }

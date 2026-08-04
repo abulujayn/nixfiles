@@ -6,7 +6,7 @@
   environment.pathsToLink = [ "/share/zsh" ];
 
   home-manager.users.${username} =
-    { config, pkgs, ... }:
+    { config, lib, pkgs, ... }:
     {
       imports = [
         ../lib/zsh-options.nix
@@ -15,9 +15,27 @@
       programs.zsh = {
         enable = true;
         dotDir = "${config.xdg.configHome}/zsh";
-        initContent = "source ${../config/zsh/init.zsh}";
+        initContent = lib.mkMerge [
+          (lib.mkOrder 500 ''
+            if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+              source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+            fi
+          '')
+          (lib.mkOrder 1000 ''
+            source ${../config/zsh/init.zsh}
+            source ${../config/zsh/p10k.zsh}
+          '')
+        ];
         autosuggestion.enable = true;
         historySubstringSearch.enable = true;
+
+        plugins = [
+          {
+            name = "powerlevel10k";
+            src = pkgs.zsh-powerlevel10k;
+            file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+          }
+        ];
 
         sessionVariables = {
           GENCOMPL_FPATH = "${config.xdg.cacheHome}/zsh/completion-generator";
@@ -26,6 +44,7 @@
 
         oh-my-zsh = {
           enable = true;
+          theme = "";
           plugins = [
             "command-not-found"
             "git"
