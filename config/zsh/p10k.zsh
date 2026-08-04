@@ -990,6 +990,9 @@
   # Default context format (no privileges, no SSH): hostname.
   typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%m'
 
+  # Show the hostname only in remote sessions.
+  typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO,ROOT}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
+
   # Custom icon.
   # typeset -g POWERLEVEL9K_CONTEXT_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
