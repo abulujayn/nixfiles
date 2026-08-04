@@ -43,28 +43,6 @@
       home.stateVersion = "26.05";
       home.username = username;
       home.homeDirectory = config.users.users.${username}.home;
-
-      programs.git = {
-        enable = true;
-        settings = {
-          url."https://github.com/".insteadOf = [
-            "gh:"
-            "github:"
-          ];
-          user = {
-            name = username;
-            email = "zaeem@parkar.au";
-          };
-        };
-      };
-
-      programs.gh = {
-        enable = true;
-        gitCredentialHelper = {
-          enable = true;
-          hosts = [ "github.com" ];
-        };
-      };
     };
   };
 

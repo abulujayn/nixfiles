@@ -1,6 +1,10 @@
 { config, lib, pkgs, username, ... }:
 
 {
+  imports = [
+    ./git.nix
+  ];
+
   system.stateVersion = "26.05";
 
   boot.loader.systemd-boot.enable = true;
@@ -76,28 +80,6 @@
 
       home.username = username;
       home.homeDirectory = config.users.users.${username}.home;
-
-      programs.git = {
-        enable = true;
-        settings = {
-          url."https://github.com/".insteadOf = [
-            "gh:"
-            "github:"
-          ];
-          user = {
-            name = username;
-            email = "zaeem@parkar.au";
-          };
-        };
-      };
-
-      programs.gh = {
-        enable = true;
-        gitCredentialHelper = {
-          enable = true;
-          hosts = [ "github.com" ];
-        };
-      };
 
       home.packages = with pkgs; [
         fastfetch

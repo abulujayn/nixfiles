@@ -10,6 +10,7 @@ in
 
 {
   imports = [
+    ../git.nix
     ./iterm
   ];
 
