@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, username, ... }:
 
 let
   cfg = config.quadlets.npm;
@@ -24,8 +24,8 @@ in
         "127.0.0.1:2777:81"
       ];
       volumes = [
-        "/home/abulujayn/.config/containers/data/npm/data/:/data:Z"
-        "/home/abulujayn/.config/containers/data/npm/letsencrypt/:/etc/letsencrypt:Z"
+        "${config.users.users.${username}.home}/.config/containers/data/npm/data/:/data:Z"
+        "${config.users.users.${username}.home}/.config/containers/data/npm/letsencrypt/:/etc/letsencrypt:Z"
       ];
 
       extraConfig.Container = {

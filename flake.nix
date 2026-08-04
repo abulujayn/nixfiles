@@ -19,9 +19,11 @@
   };
   outputs = inputs@{ nixpkgs, home-manager, nix-darwin, ... }:
     let
+      username = "abulujayn";
+
       mkHost = host: nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs;
+          inherit inputs username;
           nixpkgsInput = nixpkgs;
         };
 
@@ -39,7 +41,7 @@
 
       mkDarwinHost = host: nix-darwin.lib.darwinSystem {
         specialArgs = {
-          inherit inputs;
+          inherit inputs username;
           nixpkgsInput = nixpkgs;
         };
 

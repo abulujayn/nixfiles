@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   imports = [
@@ -14,13 +14,13 @@
   };
 
   system = {
-    primaryUser = "abulujayn";
+    primaryUser = username;
     stateVersion = 7;
   };
 
-  users.users.abulujayn = {
+  users.users.${username} = {
     createHome = true;
-    home = "/Users/abulujayn";
+    home = "/Users/${username}";
   };
 
   environment.systemPackages = with pkgs; [
@@ -39,10 +39,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.abulujayn = {
+    users.${username} = {
       home.stateVersion = "26.05";
-      home.username = "abulujayn";
-      home.homeDirectory = "/Users/abulujayn";
+      home.username = username;
+      home.homeDirectory = config.users.users.${username}.home;
 
       programs.git = {
         enable = true;
@@ -52,7 +52,7 @@
             "github:"
           ];
           user = {
-            name = "abulujayn";
+            name = username;
             email = "zaeem@parkar.au";
           };
         };

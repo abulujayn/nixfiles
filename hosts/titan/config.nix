@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, username, ... }:
 
 {
   imports = [
@@ -12,7 +12,7 @@
     ../../modules/libvirtd.nix
   ];
 
-  home-manager.users.abulujayn.programs.zsh.initContent =
+  home-manager.users.${username}.programs.zsh.initContent =
     lib.mkAfter "source ${./battery-prompt.zsh}";
 
   services.openssh.extraConfig = ''

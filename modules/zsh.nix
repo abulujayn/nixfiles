@@ -1,11 +1,11 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, username, ... }:
 
 {
   programs.zsh.enable = true;
-  users.users.abulujayn.shell = pkgs.zsh;
+  users.users.${username}.shell = pkgs.zsh;
   environment.pathsToLink = [ "/share/zsh" ];
 
-  home-manager.users.abulujayn =
+  home-manager.users.${username} =
     { config, pkgs, ... }:
     {
       imports = [

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, username, ... }:
 
 {
   system.stateVersion = "26.05";
@@ -44,7 +44,7 @@
 
   virtualisation.podman.enable = true;
 
-  users.users.abulujayn = {
+  users.users.${username} = {
     isNormalUser = true;
     createHome = true;
     linger = true;
@@ -71,11 +71,11 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.abulujayn = {
+    users.${username} = {
       home.stateVersion = "26.05";
 
-      home.username = "abulujayn";
-      home.homeDirectory = "/home/abulujayn";
+      home.username = username;
+      home.homeDirectory = config.users.users.${username}.home;
 
       programs.git = {
         enable = true;
@@ -85,7 +85,7 @@
             "github:"
           ];
           user = {
-            name = "abulujayn";
+            name = username;
             email = "zaeem@parkar.au";
           };
         };

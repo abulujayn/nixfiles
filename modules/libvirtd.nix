@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   virtualisation.libvirtd = {
@@ -17,7 +17,7 @@
   ];
 
   users.users = {
-    abulujayn.extraGroups = [ "libvirtd" ];
+    ${username}.extraGroups = [ "libvirtd" ];
     libvirtdbus.extraGroups = [ "libvirtd" ];
   };
 }

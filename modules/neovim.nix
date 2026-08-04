@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   programs.neovim = {
@@ -9,7 +9,7 @@
   };
 
   home-manager.users = {
-    abulujayn = {
+    ${username} = {
       xdg.configFile."nvim" = {
         source = ../config/nvim;
         recursive = true;
