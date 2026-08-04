@@ -1,26 +1,10 @@
 { pkgs, ... }:
 
-let
-  aldente = pkgs.callPackage ../../darwin-apps/aldente.nix { };
-  core-monitor = pkgs.callPackage ../../darwin-apps/core-monitor.nix { };
-  jump-desktop = pkgs.callPackage ../../darwin-apps/jump-desktop.nix { };
-  notunes = pkgs.callPackage ../../darwin-apps/notunes.nix { };
-  thaw = pkgs.callPackage ../../darwin-apps/thaw.nix { };
-in
-
 {
   imports = [
+    ../../modules/darwin/common.nix
     ../../modules/zsh.nix
 
-    ../../modules/darwin/dock.nix
-    ../../modules/darwin/finder.nix
-    ../../modules/darwin/menubar.nix
-    ../../modules/darwin/hid.nix
-    ../../modules/darwin/system-defaults.nix
-    ../../modules/darwin/pam.nix
-    ../../modules/darwin/iterm.nix
-
-    ./homebrew.nix
     ./work.nix
   ];
 
@@ -40,16 +24,9 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    aldente
-    core-monitor
-    jump-desktop
-    notunes
-    thaw
-
     zed-editor
     tailscale
     chatgpt
-    keepassxc
     iloader
 
     mole-cleaner

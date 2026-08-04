@@ -5,8 +5,9 @@ let
 in
 
 {
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     helium
+    keepassxc
   ];
 
   homebrew.casks = [
