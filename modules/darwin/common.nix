@@ -1,11 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  aldente = pkgs.callPackage ../../darwin-apps/aldente.nix { };
   core-monitor = pkgs.callPackage ../../darwin-apps/core-monitor.nix { };
   jump-desktop = pkgs.callPackage ../../darwin-apps/jump-desktop.nix { };
-  notunes = pkgs.callPackage ../../darwin-apps/notunes.nix { };
-  thaw = pkgs.callPackage ../../darwin-apps/thaw.nix { };
 in
 
 {
@@ -15,14 +12,32 @@ in
   ];
 
   environment.systemPackages = [
-    aldente
     core-monitor
     jump-desktop
     notunes
-    thaw
   ];
 
-  homebrew.enable = true;
+  fonts.packages = with pkgs.nerd-fonts; [
+    jetbrains-mono
+  ];
+
+  homebrew = {
+    enable = true;
+
+    casks = [
+      "aldente"
+      "thaw"
+      "notunes"
+      "logitech-g-hub"
+    ];
+
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      cleanup = "zap";
+      extraFlags = [ "--verbose" ];
+    };
+  };
 
   programs.mas = {
     enable = true;
@@ -71,11 +86,17 @@ in
     finder = {
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
-      CreateDesktop = false;
       NewWindowTarget = "Home";
       ShowPathbar = true;
       ShowStatusBar = true;
+      NewWindowTarget = "Home";
+      CreateDesktop = false;
+      ShowExternalHardDrivesOnDesktop = true;
+      ShowHardDrivesOnDesktop = true;
+      ShowMountedServersOnDesktop = true;
+      ShowRemovableMediaOnDesktop = true;
       FXDefaultSearchScope = "SCcf";
+      FXPreferredViewStyle = "icnv"
       _FXSortFoldersFirst = true;
       _FXShowPosixPathInTitle = false;
     };
@@ -107,6 +128,7 @@ in
     screencapture = {
       location = "~/Downloads";
       save-selections = false;
+      type = "png";
     };
 
     trackpad = {
@@ -127,5 +149,44 @@ in
     };
 
     WindowManager.EnableStandardClickToShowDesktop = false;
+
+    LaunchServices.LSQuarantine = false;
+
+    CustomUserPreferences = {
+      "com.apple.desktopservices" = {
+        DSDontWriteUSBStores = true;
+        DSDontWriteNetworkStores = true;
+      };
+
+      "com.apple.finder".WarnOnEmptyTrash = false;
+
+      "com.apple.controlcenter" = {
+        RemoteLiveActivitiesEnabled = false;
+        "NSStatusItem VisibleCC WiFi" = true;
+      };
+
+      "com.apple.safari" = {
+        IncludeDevelopMenu = true;
+        AutoOpenSafeDownloads = false;
+        HideSuggestionsEmptyItemView = true;
+        HideStartPageRecentlyClosedTabsEmptyItemView = true;
+        ShowSidebarInNewWindows = false;
+        ShowSidebarInTopSites = false;
+      };
+
+      "com.apple.AdLib" = {
+        allowApplePersonalizedAdvertising = false;
+        allowIdentifierForAdvertising = false;
+      };
+
+      NSGlobalDomain = {
+        WebKitDeveloperExtras = true;
+      };
+    };
   };
+
+  system.activationScripts.postActivation.text = ''
+    echo "Show the ~/Library folder"
+    chflags nohidden ~/Library
+  '';
 }
