@@ -12,9 +12,13 @@ in
   imports = [
     ../../modules/zsh.nix
 
-    ./system-defaults.nix
-    ./iterm.nix
-    ./pam.nix
+    ../../modules/darwin/dock.nix
+    ../../modules/darwin/finder.nix
+    ../../modules/darwin/menubar.nix
+    ../../modules/darwin/hid.nix
+    ../../modules/darwin/system-defaults.nix
+    ../../modules/darwin/pam.nix
+    ../../modules/darwin/iterm.nix
 
     ./homebrew.nix
     ./work.nix
