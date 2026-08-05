@@ -37,6 +37,7 @@ in
       "thaw"
       "notunes"
       "logitech-g-hub"
+      "linearmouse"
     ];
 
     onActivation = {
@@ -80,14 +81,13 @@ in
 
       persistent-apps = [
         "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
-        "/System/Applications/Utilities/Terminal.app"
-        "${pkgs.zed-editor}/Applications/Zed.app"
+        "/Applications/Nix Apps/iTerm2.app"
+        "/Applications/Nix Apps/Zed.app"
         "/System/Applications/System Settings.app"
       ];
 
       persistent-others = [
         { folder = "/Users/${config.system.primaryUser}/Downloads"; }
-        { folder = "/Users/${config.system.primaryUser}/Library/Mobile Documents/com~apple~CloudDocs"; }
       ];
     };
 
@@ -130,6 +130,7 @@ in
       NSNavPanelExpandedStateForSaveMode2 = true;
       "com.apple.keyboard.fnState" = true;
       "com.apple.sound.beep.feedback" = 0;
+      AppleShowScrollBars = "WhenScrolling";
     };
 
     screencapture = {
@@ -188,6 +189,13 @@ in
 
       NSGlobalDomain = {
         WebKitDeveloperExtras = true;
+      };
+
+      "com.googlecode.iterm2" = {
+        TabStyleWithAutomaticOption = 5;
+        QuitWhenAllWindowsClosed = 1;
+        PromptOnQuit = 0;
+        HideTab = 0;
       };
     };
   };
