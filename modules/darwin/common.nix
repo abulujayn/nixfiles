@@ -17,7 +17,7 @@
     touchIdAuth = true;
   };
   system.defaults.loginwindow.GuestEnabled = false;
-  LaunchServices.LSQuarantine = false;
+  system.defaults.LaunchServices.LSQuarantine = false;
 
   power.sleep.allowSleepByPowerButton = true;
 
