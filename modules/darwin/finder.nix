@@ -35,7 +35,23 @@
         DSDontWriteNetworkStores = true;
       };
 
-      "com.apple.finder".WarnOnEmptyTrash = false;
+      "com.apple.finder" = {
+        WarnOnEmptyTrash = false;
+
+        FXPreferredGroupBy = "None";
+
+        FK_DefaultListViewSettingsV2 = {
+          sortColumn = "name";
+          ascending = true;
+        };
+
+        StandardViewSettings = {
+          ListViewSettings = {
+            sortColumn = "name";
+            ascending = true;
+          };
+        };
+      };
     };
   };
 
