@@ -39,6 +39,12 @@
         allowApplePersonalizedAdvertising = false;
         allowIdentifierForAdvertising = false;
       };
+
+      # disable spotlight
+      "com.apple.symbolichotkeys".AppleSymbolicHotKeys = {
+        "64".enabled = false;
+        "65".enabled = false;
+      };
     };
   };
 }
