@@ -13,6 +13,7 @@ in
     zed-editor
     tailscale
     iloader
+    raycast
 
     mole-cleaner
     android-tools
