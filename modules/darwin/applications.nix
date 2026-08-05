@@ -13,7 +13,6 @@ in
     jump-desktop
 
     zed-editor
-    tailscale
     iloader
     raycast
 
@@ -45,6 +44,7 @@ in
       "logitech-g-hub"
       "linearmouse"
       "chatgpt"
+      "tailscale-app"
     ];
 
     onActivation = {
