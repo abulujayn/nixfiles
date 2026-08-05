@@ -13,7 +13,6 @@ in
   environment.systemPackages = with pkgs; [
     core-monitor
     jump-desktop
-    notunes
 
     zed-editor
     tailscale
