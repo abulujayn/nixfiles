@@ -6,7 +6,6 @@
 
     ../../modules/common.nix
     ../../modules/neovim.nix
-    ../../modules/zsh.nix
     ../../modules/efi-live.nix
     ../../modules/ts-exitnode.nix
   ];

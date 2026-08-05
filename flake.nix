@@ -21,11 +21,27 @@
     let
       username = "abulujayn";
 
-      globalModule = {
+      globalModule = { config, ... }: {
+        imports = [
+          ./modules/git.nix
+          ./modules/zsh.nix
+        ];
+
         nix.settings.experimental-features = [
           "nix-command"
           "flakes"
         ];
+
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+
+          users.${username} = {
+            home.stateVersion = "26.05";
+            home.username = username;
+            home.homeDirectory = config.users.users.${username}.home;
+          };
+        };
       };
 
       mkHost = host: nixpkgs.lib.nixosSystem {

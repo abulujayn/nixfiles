@@ -1,10 +1,6 @@
 { config, lib, pkgs, username, ... }:
 
 {
-  imports = [
-    ./git.nix
-  ];
-
   system.stateVersion = "26.05";
 
   boot.loader.systemd-boot.enable = true;
@@ -71,22 +67,10 @@
     };
   };
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
-    users.${username} = {
-      home.stateVersion = "26.05";
-
-      home.username = username;
-      home.homeDirectory = config.users.users.${username}.home;
-
-      home.packages = with pkgs; [
-        fastfetch
-        distrobox
-      ];
-    };
-  };
+  home-manager.users.${username}.home.packages = with pkgs; [
+    fastfetch
+    distrobox
+  ];
 
   environment.systemPackages = with pkgs; [
     wget

@@ -7,7 +7,6 @@ in
 
 {
   imports = [
-    ../git.nix
     ./iterm
   ];
 
@@ -99,14 +98,13 @@ in
       NewWindowTarget = "Home";
       ShowPathbar = true;
       ShowStatusBar = true;
-      NewWindowTarget = "Home";
       CreateDesktop = false;
       ShowExternalHardDrivesOnDesktop = true;
       ShowHardDrivesOnDesktop = true;
       ShowMountedServersOnDesktop = true;
       ShowRemovableMediaOnDesktop = true;
       FXDefaultSearchScope = "SCcf";
-      FXPreferredViewStyle = "icnv"
+      FXPreferredViewStyle = "icnv";
       _FXSortFoldersFirst = true;
       _FXShowPosixPathInTitle = false;
     };
@@ -205,17 +203,6 @@ in
   users.users.${username} = {
     createHome = true;
     home = "/Users/${username}";
-  };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
-    users.${username} = {
-      home.stateVersion = "26.05";
-      home.username = username;
-      home.homeDirectory = config.users.users.${username}.home;
-    };
   };
 
   nixpkgs = {
