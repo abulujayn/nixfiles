@@ -11,10 +11,20 @@ in
     ./iterm
   ];
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     core-monitor
     jump-desktop
     notunes
+
+    zed-editor
+    tailscale
+    chatgpt
+    iloader
+
+    mole-cleaner
+    android-tools
+    step-cli
+    _7zz
   ];
 
   fonts.packages = with pkgs.nerd-fonts; [
@@ -189,4 +199,32 @@ in
     echo "Show the ~/Library folder"
     chflags nohidden ~/Library
   '';
+
+  power.sleep.allowSleepByPowerButton = true;
+
+  users.users.${username} = {
+    createHome = true;
+    home = "/Users/${username}";
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+
+    users.${username} = {
+      home.stateVersion = "26.05";
+      home.username = username;
+      home.homeDirectory = config.users.users.${username}.home;
+    };
+  };
+
+  nixpkgs = {
+    hostPlatform = "aarch64-darwin";
+    config.allowUnfree = true;
+  };
+
+  system = {
+    primaryUser = username;
+    stateVersion = 7;
+  };
 }

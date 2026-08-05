@@ -21,6 +21,13 @@
     let
       username = "abulujayn";
 
+      globalModule = {
+        nix.settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+      };
+
       mkHost = host: nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs username;
@@ -29,6 +36,7 @@
 
         modules = [
           home-manager.nixosModules.home-manager
+          globalModule
 
           {
             networking.hostName = host;
@@ -47,6 +55,7 @@
 
         modules = [
           home-manager.darwinModules.home-manager
+          globalModule
 
           {
             networking.hostName = host;
