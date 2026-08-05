@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 let
   core-monitor = pkgs.callPackage ../../darwin-apps/core-monitor.nix { };
