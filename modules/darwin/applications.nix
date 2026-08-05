@@ -16,6 +16,7 @@ in
     iloader
     raycast
 
+    direnv
     mole-cleaner
     android-tools
     step-cli
