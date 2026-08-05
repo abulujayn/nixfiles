@@ -16,7 +16,6 @@ in
 
     zed-editor
     tailscale
-    chatgpt
     iloader
 
     mole-cleaner
@@ -38,6 +37,7 @@ in
       "notunes"
       "logitech-g-hub"
       "linearmouse"
+      "chatgpt"
     ];
 
     onActivation = {
@@ -55,6 +55,7 @@ in
       "Amphetamine" = 937984704;
       "Windows App" = 1295203466;
       "uBlock" = 6745342698;
+      "AdBlock Pro" = 1018301773;
       "Xcode" = 497799835;
     };
   };
@@ -83,6 +84,7 @@ in
         "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
         "/Applications/Nix Apps/iTerm2.app"
         "/Applications/Nix Apps/Zed.app"
+        "/Applications/ChatGPT.app"
         "/System/Applications/System Settings.app"
       ];
 
