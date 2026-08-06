@@ -40,6 +40,11 @@
             home.stateVersion = "26.05";
             home.username = username;
             home.homeDirectory = config.users.users.${username}.home;
+
+            programs.direnv = {
+              enable = true;
+              nix-direnv.enable = true;
+            };
           };
         };
       };

@@ -67,17 +67,10 @@
     };
   };
 
-  home-manager.users.${username} = {
-    programs.direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-
-    home.packages = with pkgs; [
-      fastfetch
-      distrobox
-    ];
-  };
+  home-manager.users.${username}.home.packages = with pkgs; [
+    fastfetch
+    distrobox
+  ];
 
   environment.systemPackages = with pkgs; [
     wget
