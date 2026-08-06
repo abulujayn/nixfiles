@@ -13,6 +13,7 @@
           name = username;
           email = "zaeem@parkar.au";
         };
+        init.defaultBranch = "main";
       };
     };
 
