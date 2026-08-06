@@ -188,7 +188,7 @@
   "Window Type" : 0,
   "BM Growl" : true,
   "Prompt Before Closing 2" : 0,
-  "Command" : "",
+  "Command" : "/bin/sh -c 'exec /usr/bin/login -fq \"$USER\"'",
   "Selected Text Color" : {
     "Red Component" : 0,
     "Color Space" : "sRGB",
@@ -257,7 +257,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.87058824300765991
   },
-  "Custom Command" : "No",
+  "Custom Command" : "Yes",
   "Background Color (Dark)" : {
     "Red Component" : 0.18039216101169586,
     "Color Space" : "sRGB",
@@ -813,7 +813,7 @@
   "Window Type" : 0,
   "BM Growl" : true,
   "Prompt Before Closing 2" : false,
-  "Command" : "",
+  "Command" : "/bin/sh -c 'exec /usr/bin/login -fq \"$USER\"'",
   "Selected Text Color" : {
     "Red Component" : 0,
     "Color Space" : "sRGB",
@@ -881,7 +881,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.062745098039215685
   },
-  "Custom Command" : "No",
+  "Custom Command" : "Yes",
   "Background Color (Dark)" : {
     "Red Component" : 0.0806884765625,
     "Color Space" : "sRGB",
