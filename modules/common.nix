@@ -18,7 +18,10 @@
   };
   services.resolved.enable = true;
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    extraSetFlags = [ "--ssh" ];
+  };
 
   services.openssh = {
     enable = true;
