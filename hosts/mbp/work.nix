@@ -1,12 +1,7 @@
-{ inputs, pkgs, ... }:
-
-let
-  helium = pkgs.callPackage ../../darwin-apps/helium.nix { };
-in
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    helium
     keepassxc
   ];
 

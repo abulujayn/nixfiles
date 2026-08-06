@@ -3,14 +3,12 @@
 let
   amphetamine-power-protect = pkgs.callPackage ../../darwin-apps/amphetamine-power-protect.nix { };
   core-monitor = pkgs.callPackage ../../darwin-apps/core-monitor.nix { };
-  jump-desktop = pkgs.callPackage ../../darwin-apps/jump-desktop.nix { };
 in
 
 {
   environment.systemPackages = with pkgs; [
     amphetamine-power-protect
     core-monitor
-    jump-desktop
 
     zed-editor
     iloader
@@ -45,8 +43,10 @@ in
       "logitech-g-hub"
       "linearmouse"
       "chatgpt"
+      "google-chrome"
       "tailscale-app"
       "swift-quit"
+      "jump-desktop-connect"
     ];
 
     onActivation = {
