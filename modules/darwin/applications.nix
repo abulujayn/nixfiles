@@ -16,7 +16,6 @@ in
     iloader
     raycast
 
-    direnv
     mole-cleaner
     android-tools
     step-cli
@@ -26,9 +25,16 @@ in
   environment.etc."sudoers.d/amphetamine_powerProtect".source =
     "${amphetamine-power-protect}/etc/sudoers.d/amphetamine_powerProtect";
 
-  home-manager.users.${config.system.primaryUser}.home.file = {
-    "Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt".source =
-      "${amphetamine-power-protect}/Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt";
+  home-manager.users.${config.system.primaryUser} = {
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    home.file = {
+      "Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt".source =
+        "${amphetamine-power-protect}/Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt";
+    };
   };
 
   fonts.packages = with pkgs.nerd-fonts; [
