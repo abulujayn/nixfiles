@@ -9,6 +9,9 @@
       HideStartPageRecentlyClosedTabsEmptyItemView = true;
       ShowSidebarInNewWindows = false;
       ShowSidebarInTopSites = false;
+      ShowFavoritesBar-v2 = true;
+      DownloadsClearingPolicy = 1;
+      ExtensionsEnabled = true;
     };
 
     NSGlobalDomain.WebKitDeveloperExtras = true;
