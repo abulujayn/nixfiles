@@ -20,6 +20,7 @@ in
     android-tools
     step-cli
     _7zz
+    tailscale
   ];
 
   environment.etc."sudoers.d/amphetamine_powerProtect".source =
