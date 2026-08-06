@@ -46,6 +46,7 @@ in
       "linearmouse"
       "chatgpt"
       "tailscale-app"
+      "swift-quit"
     ];
 
     onActivation = {
