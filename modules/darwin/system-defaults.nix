@@ -44,6 +44,31 @@
       "com.apple.symbolichotkeys".AppleSymbolicHotKeys = {
         "64".enabled = false;
         "65".enabled = false;
+
+        # Move space left (Ctrl+LeftArrow)
+        "79" = {
+          enabled = true;
+          value = {
+            type = "standard";
+            parameters = [
+              65535
+              123
+              262144
+            ];
+          };
+        };
+        # Move space right (Ctrl+RightArrow)
+        "81" = {
+          enabled = true;
+          value = {
+            type = "standard";
+            parameters = [
+              65535
+              124
+              262144
+            ];
+          };
+        };
       };
     };
   };
