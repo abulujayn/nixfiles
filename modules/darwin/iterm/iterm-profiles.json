@@ -188,7 +188,7 @@
   "Window Type" : 0,
   "BM Growl" : true,
   "Prompt Before Closing 2" : 0,
-  "Command" : "/bin/sh -c 'exec /usr/bin/login -fq \"$USER\"'",
+  "Command" : "/bin/sh -c 'exec /usr/bin/login -flq \"$USER\"'",
   "Selected Text Color" : {
     "Red Component" : 0,
     "Color Space" : "sRGB",
@@ -813,7 +813,7 @@
   "Window Type" : 0,
   "BM Growl" : true,
   "Prompt Before Closing 2" : false,
-  "Command" : "/bin/sh -c 'exec /usr/bin/login -fq \"$USER\"'",
+  "Command" : "/bin/sh -c 'exec /usr/bin/login -flq \"$USER\"'",
   "Selected Text Color" : {
     "Red Component" : 0,
     "Color Space" : "sRGB",

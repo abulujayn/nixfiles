@@ -11,6 +11,8 @@ prompt_mbp_battery() {
     return
   fi
 
+  (( capacity < 30 || capacity > 80 )) || return
+
   case $battery_status in
     charging|"finishing charge") label=charging ;;
     charged)                     label=full ;;

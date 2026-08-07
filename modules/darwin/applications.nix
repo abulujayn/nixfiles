@@ -15,6 +15,7 @@ in
     raycast
 
     mole-cleaner
+    android-studio-tools
     android-tools
     step-cli
     _7zz
@@ -39,13 +40,15 @@ in
     casks = [
       "aldente"
       "thaw"
-      "notunes"
+      "swift-quit"
+
       "logitech-g-hub"
       "linearmouse"
+
       "chatgpt"
       "google-chrome"
+
       "tailscale-app"
-      "swift-quit"
       "jump-desktop-connect"
     ];
 

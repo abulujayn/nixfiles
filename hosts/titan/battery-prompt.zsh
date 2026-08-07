@@ -11,6 +11,9 @@ prompt_titan_battery() {
   read -r capacity < $battery/capacity
   read -r battery_status < $battery/status
 
+  [[ $capacity == <-> ]] || return
+  (( capacity < 30 || capacity > 80 )) || return
+
   case $battery_status in
     Charging)       label=charging ;;
     Full)           label=full ;;
