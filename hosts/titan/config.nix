@@ -1,18 +1,16 @@
-{ config, lib, pkgs, username, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ./hardware.nix
 
     ../../modules/common.nix
+    ../../modules/battery-prompt
     ../../modules/neovim.nix
     ../../modules/efi-live.nix
     ../../modules/cockpit.nix
     ../../modules/libvirtd.nix
   ];
-
-  home-manager.users.${username}.programs.zsh.initContent =
-    lib.mkOrder 950 "source ${./battery-prompt.zsh}";
 
   services.openssh.extraConfig = ''
     Match Address 172.16.97.1
