@@ -20,6 +20,13 @@
   system.defaults.LaunchServices.LSQuarantine = false;
 
   power.sleep.allowSleepByPowerButton = true;
+  system.activationScripts.postActivation.text = ''
+    echo "Setting AC-connected sleep settings"
+    /usr/bin/pmset -c sleep 0 lessbright 0
+
+    echo "Setting battery sleep settings"
+    /usr/bin/pmset -b sleep 15 lessbright 0
+  '';
 
   services.openssh.enable = true;
 
