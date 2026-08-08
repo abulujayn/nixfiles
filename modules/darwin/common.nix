@@ -21,6 +21,8 @@
 
   power.sleep.allowSleepByPowerButton = true;
 
+  services.openssh.enable = true;
+
   users.users.${username} = {
     createHome = true;
     home = "/Users/${username}";
