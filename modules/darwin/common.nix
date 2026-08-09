@@ -1,4 +1,8 @@
-{ username, ... }:
+{ pkgs, username, ... }:
+
+let
+  datebar = pkgs.callPackage ../../darwin-apps/datebar.nix { };
+in
 
 {
   imports = [
@@ -29,6 +33,8 @@
   '';
 
   services.openssh.enable = true;
+
+  environment.systemPackages = [ datebar ];
 
   users.users.${username} = {
     createHome = true;
