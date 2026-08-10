@@ -34,6 +34,16 @@ in
 
   services.openssh.enable = true;
 
+  home-manager.users.${username}.programs.nh = {
+    enable = true;
+
+    clean = {
+      enable = true;
+      dates = "daily";
+      extraArgs = "--keep 5";
+    };
+  };
+
   environment.systemPackages = [ datebar ];
 
   users.users.${username} = {
