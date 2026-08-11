@@ -9,5 +9,6 @@
     "citrix-workspace"
     "google-drive"
     "google-gemini"
+    "helium-browser"
   ];
 }
