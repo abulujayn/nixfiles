@@ -12,7 +12,6 @@ in
 
     zed-editor
     iloader
-    raycast
 
     mole-cleaner
     android-studio-tools
@@ -41,6 +40,7 @@ in
       "aldente"
       "thaw"
       "swift-quit"
+      "raycast"
 
       "logitech-g-hub"
       "linearmouse"
