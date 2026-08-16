@@ -45,7 +45,6 @@ in
       "logitech-g-hub"
       "linearmouse"
 
-      "chatgpt"
       "google-chrome"
 
       "tailscale-app"
