@@ -45,6 +45,7 @@ in
       "logitech-g-hub"
       "linearmouse"
 
+      "firefox"
       "google-chrome"
 
       "tailscale-app"

@@ -6,7 +6,7 @@
     show-recents = false;
 
     persistent-apps = [
-      "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+      "/Applications/Firefox.app"
       "/Applications/Nix Apps/iTerm2.app"
       "/Applications/Nix Apps/Zed.app"
       "/Applications/ChatGPT.app"
