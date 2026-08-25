@@ -104,7 +104,6 @@
       });
 
       nixosConfigurations = nixpkgs.lib.genAttrs [
-        "titan"
         "a01"
         "a02"
         "a03"
