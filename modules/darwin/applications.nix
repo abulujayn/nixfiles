@@ -39,11 +39,10 @@ in
     casks = [
       "aldente"
       "thaw"
-      "swift-quit"
       "raycast"
+      "vorssaint"
 
       "logitech-g-hub"
-      "linearmouse"
 
       "firefox"
       "google-chrome"
