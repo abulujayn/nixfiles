@@ -79,7 +79,7 @@
           home-manager.darwinModules.home-manager
           globalModule
           ./modules/cli/git.nix
-          ./modules/cli/zsh.nix
+          ./modules/cli/zsh
 
           {
             networking.hostName = host;

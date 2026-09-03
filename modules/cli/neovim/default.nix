@@ -11,7 +11,7 @@
   home-manager.users = {
     ${username} = {
       xdg.configFile."nvim" = {
-        source = ../../config/nvim;
+        source = ./config;
         recursive = true;
       };
 
