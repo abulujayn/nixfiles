@@ -27,11 +27,6 @@
       username = "abulujayn";
 
       globalModule = { config, ... }: {
-        imports = [
-          ./modules/git.nix
-          ./modules/zsh.nix
-        ];
-
         nix.settings.experimental-features = [
           "nix-command"
           "flakes"
@@ -63,6 +58,7 @@
         modules = [
           home-manager.nixosModules.home-manager
           globalModule
+          ./modules/cli
 
           {
             networking.hostName = host;
@@ -82,6 +78,8 @@
         modules = [
           home-manager.darwinModules.home-manager
           globalModule
+          ./modules/cli/git.nix
+          ./modules/cli/zsh.nix
 
           {
             networking.hostName = host;

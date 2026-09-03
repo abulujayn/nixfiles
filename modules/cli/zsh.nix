@@ -9,7 +9,7 @@
     { config, lib, pkgs, ... }:
     {
       imports = [
-        ../lib/zsh-options.nix
+        ../../lib/zsh-options.nix
       ];
 
       programs.zsh = {
@@ -22,8 +22,8 @@
             fi
           '')
           (lib.mkOrder 1000 ''
-            source ${../config/zsh/init.zsh}
-            source ${../config/zsh/p10k.zsh}
+            source ${../../config/zsh/init.zsh}
+            source ${../../config/zsh/p10k.zsh}
           '')
         ];
         autosuggestion.enable = true;
