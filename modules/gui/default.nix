@@ -1,6 +1,12 @@
 { config, lib, pkgs, username, ... }:
 
 {
+  imports = [
+    ./firefox.nix
+    ./kitty.nix
+    ./thunar.nix
+  ];
+
   programs.hyprland.enable = true;
 
   programs.noctalia = {
