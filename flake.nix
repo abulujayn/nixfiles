@@ -65,7 +65,7 @@
             system.autoUpgrade.flake = "github:abulujayn/nixfiles#${host}";
           }
 
-          ./hosts/${host}/config.nix
+          ./hosts/${host}
         ];
       };
 
@@ -87,7 +87,7 @@
             networking.localHostName = host;
           }
 
-          ./hosts/${host}/config.nix
+          ./hosts/${host}
         ];
       };
     in
