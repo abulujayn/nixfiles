@@ -1,7 +1,7 @@
 { pkgs, username, ... }:
 
 let
-  datebar = pkgs.callPackage ../../darwin-apps/datebar.nix { };
+  datebar = pkgs.callPackage ./apps/datebar.nix { };
 in
 
 {

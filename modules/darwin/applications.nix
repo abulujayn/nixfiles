@@ -1,8 +1,8 @@
 { pkgs, username, ... }:
 
 let
-  amphetamine-power-protect = pkgs.callPackage ../../darwin-apps/amphetamine-power-protect.nix { };
-  core-monitor = pkgs.callPackage ../../darwin-apps/core-monitor.nix { };
+  amphetamine-power-protect = pkgs.callPackage ./apps/amphetamine-power-protect.nix { };
+  core-monitor = pkgs.callPackage ./apps/core-monitor.nix { };
 in
 
 {
