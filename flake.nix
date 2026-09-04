@@ -111,6 +111,7 @@
         "a01"
         "a02"
         "a03"
+        "thinkpad"
       ] mkHost;
 
       darwinConfigurations.mbp = mkDarwinHost "mbp";
