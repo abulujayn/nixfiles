@@ -1,4 +1,4 @@
-{ config, ... }:
+{ username, ... }:
 
 {
   system.defaults.dock = {
@@ -14,7 +14,7 @@
     ];
 
     persistent-others = [
-      { folder = "/Users/${config.system.primaryUser}/Downloads"; }
+      { folder = "/Users/${username}/Downloads"; }
     ];
   };
 }

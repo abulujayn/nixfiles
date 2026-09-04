@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   environment.systemPackages = [
@@ -12,7 +12,8 @@
     HideTab = 0;
   };
 
-  home-manager.users.${config.system.primaryUser}.home.file = {
-    "Library/Application Support/iTerm2/DynamicProfiles/nix-profiles.json".source = ./iterm-profiles.json;
+  home-manager.users.${username}.home.file = {
+    "Library/Application Support/iTerm2/DynamicProfiles/nix-profiles.json".text =
+      builtins.toJSON (import ./iterm-profiles.nix);
   };
 }

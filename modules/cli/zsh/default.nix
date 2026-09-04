@@ -2,6 +2,8 @@
 
 {
   programs.zsh.enable = true;
+  # Oh My Zsh initializes completion after the user's fpath is populated.
+  programs.zsh.enableGlobalCompInit = false;
   users.users.${username}.shell = pkgs.zsh;
   environment.pathsToLink = [ "/share/zsh" ];
 
@@ -21,8 +23,15 @@
               source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
             fi
           '')
-          (lib.mkOrder 1000 ''
+          (lib.mkOrder 560 ''
             source ${./init.zsh}
+          '')
+          # Oh My Zsh overwrites matcher-list while loading its defaults.
+          (lib.mkOrder 850 ''
+            source ${./init.zsh}
+          '')
+          (lib.mkOrder 1000 ''
+            source ${./p10k-base.zsh}
             source ${./p10k.zsh}
           '')
         ];
@@ -45,6 +54,10 @@
         oh-my-zsh = {
           enable = true;
           theme = "";
+          extraConfig = ''
+            zstyle ':omz:plugins:ssh-agent' quiet yes
+            zstyle ':omz:plugins:ssh-agent' lazy yes
+          '';
           plugins = [
             "command-not-found"
             "git"

@@ -42,20 +42,7 @@
       gtk.enable = true;
     };
 
-    gtk = {
-      enable = true;
-      colorScheme = "dark";
-
-      theme = {
-        package = pkgs.nordic;
-        name = "Nordic";
-      };
-
-      iconTheme = {
-        package = pkgs.nordzy-icon-theme;
-        name = "Nordzy-dark";
-      };
-    };
+    gtk = import ./gtk-theme.nix { inherit pkgs; };
 
     qt = {
       enable = true;

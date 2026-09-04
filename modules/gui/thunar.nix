@@ -16,19 +16,9 @@
 
   home-manager.users.${username} = {
     # Match the rest of the desktop while keeping Thunar's chrome understated.
-    gtk = {
-      enable = true;
-      colorScheme = lib.mkDefault "dark";
-
-      theme = {
-        package = lib.mkDefault pkgs.nordic;
-        name = lib.mkDefault "Nordic";
-      };
-
-      iconTheme = {
-        package = lib.mkDefault pkgs.nordzy-icon-theme;
-        name = lib.mkDefault "Nordzy-dark";
-      };
+    gtk = import ./gtk-theme.nix {
+      inherit pkgs;
+      mkValue = lib.mkDefault;
     };
 
     xdg.mimeApps = {
