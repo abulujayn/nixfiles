@@ -58,6 +58,7 @@
         modules = [
           home-manager.nixosModules.home-manager
           globalModule
+          ./modules/common.nix
           ./modules/cli
 
           {
