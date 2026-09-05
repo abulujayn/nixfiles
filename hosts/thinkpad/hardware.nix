@@ -27,20 +27,4 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "vmd" "usbhid" "thunderbolt" ];
   boot.kernelModules = [ "kvm-intel" "thinkpad_acpi" ];
-
-  # Installation assumptions following the existing hosts' label convention.
-  # Change these if using a different filesystem, partition layout or encryption.
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
-  };
-
-  # Swap and hibernation depend on the installed RAM and disk layout.
-  swapDevices = [ ];
 }
