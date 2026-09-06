@@ -63,11 +63,6 @@
     };
   };
 
-  home-manager.users.${username}.home.packages = with pkgs; [
-    fastfetch
-    distrobox
-  ];
-
   environment.systemPackages = with pkgs; [
     wget
     curl
@@ -85,6 +80,9 @@
 
     btop
     tmux
+
+    fastfetch
+    distrobox
   ];
 
 }

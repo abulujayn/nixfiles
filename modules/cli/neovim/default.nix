@@ -8,19 +8,19 @@
     defaultEditor = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    gcc
+    gnumake
+    tree-sitter
+    lazygit
+  ];
+
   home-manager.users = {
     ${username} = {
       xdg.configFile."nvim" = {
         source = ./config;
         recursive = true;
       };
-
-      home.packages = with pkgs; [
-        gcc
-        gnumake
-        tree-sitter
-        lazygit
-      ];
     };
 
     root = {
