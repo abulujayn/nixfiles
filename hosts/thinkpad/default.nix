@@ -7,7 +7,6 @@
 
     ./hardware.nix
     ./disk.nix
-    ./secure-boot.nix
 
     ../../modules/gui
   ];
