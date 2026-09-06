@@ -1,4 +1,4 @@
-{ lib, pkgs, username, ... }:
+{ pkgs, username, ... }:
 
 {
   programs.thunar = {
@@ -14,19 +14,11 @@
   services.tumbler.enable = true;
   services.gvfs.enable = true;
 
-  home-manager.users.${username} = {
-    # Match the rest of the desktop while keeping Thunar's chrome understated.
-    gtk = import ./gtk-theme.nix {
-      inherit pkgs;
-      mkValue = lib.mkDefault;
-    };
+  xdg.mime.defaultApplications."inode/directory" = [ "thunar.desktop" ];
 
-    xdg.mimeApps = {
-      enable = true;
-      defaultApplications."inode/directory" = [ "thunar.desktop" ];
-    };
-
-    xdg.configFile."xfce4/xfconf/xfce-perchannel-xml/thunar.xml".text = ''
+  # Xfconf treats /etc/xdg as system defaults while keeping runtime changes in
+  # the user's writable Xfconf state.
+  environment.etc."xdg/xfce4/xfconf/xfce-perchannel-xml/thunar.xml".text = ''
       <?xml version="1.0" encoding="UTF-8"?>
 
       <channel name="thunar" version="1.0">
@@ -54,6 +46,9 @@
         <property name="misc-show-delete-action" type="bool" value="false"/>
         <property name="misc-exec-shell-scripts-by-default" type="bool" value="false"/>
       </channel>
-    '';
-  };
+  '';
+
+  system.userFilesCleanup.${username} = [
+    ".config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml"
+  ];
 }

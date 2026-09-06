@@ -24,10 +24,8 @@ in
   environment.etc."sudoers.d/amphetamine_powerProtect".source =
     "${amphetamine-power-protect}/etc/sudoers.d/amphetamine_powerProtect";
 
-  home-manager.users.${username}.home.file = {
-    "Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt".source =
-      "${amphetamine-power-protect}/Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt";
-  };
+  system.userFiles.${username}."Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt".source =
+    "${amphetamine-power-protect}/Library/Application Scripts/com.if.Amphetamine/powerProtect.scpt";
 
   fonts.packages = with pkgs.nerd-fonts; [
     jetbrains-mono

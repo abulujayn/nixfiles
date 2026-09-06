@@ -1,6 +1,6 @@
-{ lib, username, ... }:
+{ lib, ... }:
 
 {
-  home-manager.users.${username}.programs.zsh.initContent =
+  programs.zsh.interactiveShellInit =
     lib.mkOrder 940 "source ${./common.zsh}";
 }

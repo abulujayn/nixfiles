@@ -1,29 +1,23 @@
 { inputs, username }:
 
 let
-  inherit (inputs) home-manager nix-darwin nixpkgs;
+  inherit (inputs) nix-darwin nixpkgs;
 
-  globalModule = { config, ... }: {
+  globalModule = {
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"
     ];
 
-    home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-
-      users.${username} = {
-        home.stateVersion = "26.05";
-        home.username = username;
-        home.homeDirectory = config.users.users.${username}.home;
-
-        programs.direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-        };
-      };
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = false;
+      nix-direnv.enable = true;
     };
+
+    system.userFilesCleanup.${username} = [
+      ".config/direnv/lib/hm-nix-direnv.sh"
+    ];
   };
 
   mkHost = host: nixpkgs.lib.nixosSystem {
@@ -33,7 +27,10 @@ let
     };
 
     modules = [
-      home-manager.nixosModules.home-manager
+      inputs.nix-index-database.nixosModules.nix-index
+      inputs.nixvim.nixosModules.nixvim
+      ../modules/user-files.nix
+      ../modules/nix-index.nix
       globalModule
       ../modules/common.nix
       ../modules/cli
@@ -54,7 +51,7 @@ let
     };
 
     modules = [
-      home-manager.darwinModules.home-manager
+      ../modules/user-files.nix
       globalModule
       ../modules/cli/git.nix
       ../modules/cli/zsh

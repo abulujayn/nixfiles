@@ -34,17 +34,33 @@ in
 
   services.openssh.enable = true;
 
-  home-manager.users.${username}.programs.nh = {
-    enable = true;
-
-    clean = {
-      enable = true;
-      dates = "daily";
-      extraArgs = "--keep 5";
-    };
+  launchd.user.agents.nh-clean.serviceConfig = {
+    Label = "org.nix-community.home.nh-clean";
+    ProgramArguments = [
+      "${pkgs.nh}/bin/nh"
+      "clean"
+      "user"
+      "--keep 5"
+    ];
+    StartCalendarInterval = [
+      {
+        Hour = 0;
+        Minute = 0;
+      }
+    ];
   };
 
-  environment.systemPackages = [ datebar ];
+  system.userFilesCleanup.${username} = [
+    ".cache/.keep"
+    ".cache/oh-my-zsh/.keep"
+    ".local/state/.keep"
+    "Library/Fonts/.home-manager-fonts-version"
+  ];
+
+  environment.systemPackages = [
+    datebar
+    pkgs.nh
+  ];
 
   users.users.${username} = {
     createHome = true;

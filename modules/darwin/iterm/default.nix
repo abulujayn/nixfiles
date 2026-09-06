@@ -12,8 +12,8 @@
     HideTab = 0;
   };
 
-  home-manager.users.${username}.home.file = {
-    "Library/Application Support/iTerm2/DynamicProfiles/nix-profiles.json".text =
-      builtins.toJSON (import ./iterm-profiles.nix);
-  };
+  system.userFiles.${username}."Library/Application Support/iTerm2/DynamicProfiles/nix-profiles.json".source =
+    pkgs.writeText "iterm-dynamic-profiles.json" (
+      builtins.toJSON (import ./iterm-profiles.nix)
+    );
 }

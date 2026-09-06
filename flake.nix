@@ -7,10 +7,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixvim.url = "github:nix-community/nixvim";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin";
@@ -32,7 +34,7 @@
       flake = false;
     };
   };
-  outputs = inputs@{ nixpkgs, home-manager, nix-darwin, ... }:
+  outputs = inputs@{ nixpkgs, nix-darwin, ... }:
     let
       username = "abulujayn";
       hostLib = import ./lib/hosts.nix { inherit inputs username; };

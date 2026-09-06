@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ pkgs, username, ... }:
 
 let
   # Pin the complete theme so relative CSS imports and icon paths stay intact.
@@ -15,91 +15,98 @@ let
     url = "https://addons.mozilla.org/firefox/downloads/file/3786274/nord_polar_night_theme-1.18.xpi";
     sha256 = "3a871b7ad5f78fe929b14d12afca722155bf47382d94da53bc9db899b78ec34c";
   };
-  nordPolarNight = pkgs.runCommand "nord-polar-night-theme-1.18" {
-    passthru.addonId = nordPolarNightId;
-  } ''
-    extensionDir="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-    mkdir -p "$extensionDir"
-    cp ${nordPolarNightXpi} "$extensionDir/${nordPolarNightId}.xpi"
-  '';
-  firefox = config.home-manager.users.${username}.programs.firefox;
+  profile = ".config/mozilla/firefox/default";
 in
 {
-  # Keep our entry-point stylesheets separate from the upstream theme.
-  home-manager.users.${username} = {
-    home.file."${firefox.profilesPath}/${firefox.profiles.default.path}/chrome/arcwtf".source = arcwtf;
+  programs.firefox = {
+    enable = true;
+    preferencesStatus = "user";
 
-    programs.firefox = {
-      enable = true;
+    policies.ExtensionSettings."${nordPolarNightId}" = {
+      installation_mode = "force_installed";
+      install_url = "file://${nordPolarNightXpi}";
+    };
 
-      profiles.default = {
-        id = 0;
-        isDefault = true;
-        name = "default";
+    preferences = {
+      # Load the declaratively installed theme and select it at startup.
+      "extensions.autoDisableScopes" = 0;
+      "extensions.activeThemeID" = nordPolarNightId;
 
-        extensions.packages = [ nordPolarNight ];
+      # ArcWTF uses Firefox's native vertical tabs, not Sidebery.
+      "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+      "svg.context-properties.content.enabled" = true;
+      "sidebar.revamp" = true;
+      "sidebar.verticalTabs" = true;
+      "uc.tweak.hide-newtab-logo" = true;
 
-        settings = {
-          # Load the declaratively installed theme and select it at startup.
-          "extensions.autoDisableScopes" = 0;
-          "extensions.activeThemeID" = nordPolarNightId;
+      # Keep the browser quiet and uncluttered.
+      "browser.aboutConfig.showWarning" = false;
+      "browser.compactmode.show" = true;
+      "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+      "browser.newtabpage.activity-stream.showSponsored" = false;
+      "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+      "browser.newtabpage.activity-stream.showWeather" = false;
+      "browser.newtabpage.activity-stream.system.showWeather" = false;
+      "browser.newtabpage.enabled" = true;
+      "browser.startup.page" = 3;
+      "browser.tabs.closeWindowWithLastTab" = false;
+      "browser.tabs.loadInBackground" = true;
+      "browser.tabs.warnOnClose" = true;
+      "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
+      "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+      "extensions.pocket.enabled" = false;
 
-          # ArcWTF uses Firefox's native vertical tabs, not Sidebery.
-          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-          "svg.context-properties.content.enabled" = true;
-          "sidebar.revamp" = true;
-          "sidebar.verticalTabs" = true;
-          "uc.tweak.hide-newtab-logo" = true;
+      # Prefer native dark controls and smooth, predictable scrolling.
+      "browser.theme.content-theme" = 0;
+      "browser.theme.toolbar-theme" = 0;
+      "general.smoothScroll" = true;
+      "layout.css.prefers-color-scheme.content-override" = 0;
+      "ui.systemUsesDarkTheme" = 1;
 
-          # Keep the browser quiet and uncluttered.
-          "browser.aboutConfig.showWarning" = false;
-          "browser.compactmode.show" = true;
-          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-          "browser.newtabpage.activity-stream.showSponsored" = false;
-          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-          "browser.newtabpage.activity-stream.showWeather" = false;
-          "browser.newtabpage.activity-stream.system.showWeather" = false;
-          "browser.newtabpage.enabled" = true;
-          "browser.startup.page" = 3;
-          "browser.tabs.closeWindowWithLastTab" = false;
-          "browser.tabs.loadInBackground" = true;
-          "browser.tabs.warnOnClose" = true;
-          "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
-          "browser.urlbar.suggest.quicksuggest.sponsored" = false;
-          "extensions.pocket.enabled" = false;
-
-          # Prefer native dark controls and smooth, predictable scrolling.
-          "browser.theme.content-theme" = 0;
-          "browser.theme.toolbar-theme" = 0;
-          "general.smoothScroll" = true;
-          "layout.css.prefers-color-scheme.content-override" = 0;
-          "ui.systemUsesDarkTheme" = 1;
-
-          # Disable Mozilla telemetry, experiments, and promotional discovery.
-          "app.shield.optoutstudies.enabled" = false;
-          "browser.discovery.enabled" = false;
-          "browser.ping-centre.telemetry" = false;
-          "datareporting.healthreport.uploadEnabled" = false;
-          "datareporting.policy.dataSubmissionEnabled" = false;
-          "toolkit.telemetry.enabled" = false;
-          "toolkit.telemetry.unified" = false;
-        };
-
-        userChrome = ''
-          @import url("arcwtf/userChrome.css");
-        '';
-
-        userContent = ''
-          @import url("arcwtf/userContent.css");
-
-          /* Keep ArcWTF's layout, but omit the Arc logo and wordmark. */
-          @-moz-document url("about:newtab"), url("about:home") {
-            .logo-and-wordmark {
-              display: none !important;
-            }
-          }
-        '';
-      };
+      # Disable Mozilla telemetry, experiments, and promotional discovery.
+      "app.shield.optoutstudies.enabled" = false;
+      "browser.discovery.enabled" = false;
+      "browser.ping-centre.telemetry" = false;
+      "datareporting.healthreport.uploadEnabled" = false;
+      "datareporting.policy.dataSubmissionEnabled" = false;
+      "toolkit.telemetry.enabled" = false;
+      "toolkit.telemetry.unified" = false;
     };
   };
+
+  # Firefox profile layout and chrome are inherently per-user. Preferences and
+  # the Firefox package itself are system-wide above.
+  system.userFiles.${username} = {
+    ".config/mozilla/firefox/profiles.ini".source = pkgs.writeText "firefox-profiles.ini" ''
+      [General]
+      StartWithLastProfile=1
+      Version=2
+
+      [Profile0]
+      Default=1
+      IsRelative=1
+      Name=default
+      Path=default
+    '';
+
+    "${profile}/chrome/arcwtf".source = arcwtf;
+    "${profile}/chrome/userChrome.css".source = pkgs.writeText "firefox-userChrome.css" ''
+      @import url("arcwtf/userChrome.css");
+    '';
+    "${profile}/chrome/userContent.css".source = pkgs.writeText "firefox-userContent.css" ''
+      @import url("arcwtf/userContent.css");
+
+      /* Keep ArcWTF's layout, but omit the Arc logo and wordmark. */
+      @-moz-document url("about:newtab"), url("about:home") {
+        .logo-and-wordmark {
+          display: none !important;
+        }
+      }
+    '';
+  };
+
+  system.userFilesCleanup.${username} = [
+    "${profile}/extensions/${nordPolarNightId}.xpi"
+    "${profile}/user.js"
+  ];
 }

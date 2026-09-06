@@ -1,8 +1,8 @@
-{ lib, username, ... }:
+{ lib, ... }:
 
 {
   imports = [ ./common.nix ];
 
-  home-manager.users.${username}.programs.zsh.initContent =
+  programs.zsh.interactiveShellInit =
     lib.mkOrder 950 "source ${./battery-prompt.zsh}";
 }
