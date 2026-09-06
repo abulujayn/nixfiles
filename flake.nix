@@ -38,18 +38,7 @@
       hostLib = import ./lib/hosts.nix { inherit inputs username; };
     in
     {
-      devShells = nixpkgs.lib.genAttrs [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-linux"
-      ] (system: {
-        default = nixpkgs.legacyPackages.${system}.mkShell {
-          packages = with nixpkgs.legacyPackages.${system}; [
-            nil
-            nixd
-          ];
-        };
-      });
+      devShells = import ./lib/devshells.nix { inherit nixpkgs; };
 
       nixosConfigurations = nixpkgs.lib.genAttrs [
         "a01"
