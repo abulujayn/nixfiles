@@ -78,9 +78,18 @@ in
     recommendedServices.enable = true;
   };
 
-  programs.noctalia-greeter.enable = true;
+  programs.noctalia-greeter = {
+    enable = true;
+    settings.auth.allow_empty_password = true;
+  };
 
   services.fprintd.enable = true;
+
+  # Noctalia submits the password to the first PAM prompt. Try pam_unix first
+  # so a valid password completes authentication without waiting for a scan;
+  # an empty submission falls through to pam_fprintd instead.
+  security.pam.services.login.rules.auth.fprintd.order =
+    config.security.pam.services.login.rules.auth.unix.order + 10;
 
   environment.systemPackages = with pkgs; [
     nordic
@@ -120,42 +129,10 @@ in
       path = "${wallpaperDirectory}/bg.jpg"
     '';
     "xdg/hypr/hyprland.lua".text = ''
-      -- Keep the packaged defaults, but replace their conflicting shortcuts with
-      -- the CachyOS layout below.  Hyprland accepts more than one action for a
-      -- key, so filter the packaged bindings before loading them rather than
-      -- registering a second action for the same chord.
+      -- Load the packaged non-binding defaults, but start with a completely
+      -- clean keymap so every active binding is declared below.
       local packaged_bind = hl.bind
-      local replaced_binds = {
-        ["SUPER + Q"] = true,
-        ["SUPER + C"] = true,
-        ["SUPER + E"] = true,
-        ["SUPER + M"] = true,
-        ["SUPER + V"] = true,
-        ["SUPER + R"] = true,
-        ["SUPER + mouse_down"] = true,
-        ["SUPER + mouse_up"] = true,
-        ["XF86AudioRaiseVolume"] = true,
-        ["XF86AudioLowerVolume"] = true,
-        ["XF86AudioMute"] = true,
-        ["XF86AudioMicMute"] = true,
-        ["XF86MonBrightnessUp"] = true,
-        ["XF86MonBrightnessDown"] = true,
-        ["XF86AudioNext"] = true,
-        ["XF86AudioPause"] = true,
-        ["XF86AudioPlay"] = true,
-        ["XF86AudioPrev"] = true,
-      }
-
-      for key = 0, 9 do
-        replaced_binds["SUPER + " .. key] = true
-        replaced_binds["SUPER + SHIFT + " .. key] = true
-      end
-
-      hl.bind = function(keys, action, options)
-        if not replaced_binds[keys] then
-          return packaged_bind(keys, action, options)
-        end
-      end
+      hl.bind = function() end
       dofile("${pkgs.hyprland}/share/hypr/hyprland.lua")
       hl.bind = packaged_bind
 
@@ -168,51 +145,76 @@ in
       local mainMod = "SUPER"
       local noctalia = "noctalia msg "
 
-      -- Window management (CachyOS layout).
-      hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-      hl.bind(mainMod .. " + ALT + Space", hl.dsp.window.float({ action = "toggle" }))
-      hl.bind(mainMod .. " + D", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
-      hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
-      hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
-      hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
-      hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
-      hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
+      -- Core window management.
+      hl.bind(mainMod .. " + Q", hl.dsp.window.close(), { description = "Close window" })
+      hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating" })
+      hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), { description = "Toggle fullscreen" })
+      hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }), { description = "Toggle maximized" })
       hl.bind("ALT + TAB", hl.dsp.window.cycle_next())
       hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(noctalia .. "window-switcher"))
 
-      -- Launch only applications and shell surfaces already configured here.
+      -- Applications and desktop shell.
       hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("kitty"))
       hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"))
-      hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("firefox"))
+      hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
       hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd("kitty btop"))
-      hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(noctalia .. "settings-toggle"))
+      hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(noctalia .. "settings-toggle"))
       hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(noctalia .. "panel-toggle control-center"))
       hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(noctalia .. "panel-toggle launcher"))
       hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(noctalia .. "session lock"))
-      hl.bind(mainMod .. " + ALT + C", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"))
+      hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"))
 
       -- Noctalia replaces separate screenshot, clipboard, and wallpaper tools.
       hl.bind("Print", hl.dsp.exec_cmd(noctalia .. "screenshot-annotate"))
       hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(noctalia .. "screenshot-fullscreen pick"))
-      hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(noctalia .. "panel-toggle clipboard"))
+      hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(noctalia .. "panel-toggle clipboard"))
       hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(noctalia .. "panel-toggle wallpaper"))
 
-      -- Workspace navigation follows CachyOS's modifier scheme.  This machine
-      -- has no fixed multi-monitor layout, so monitor-specific number bindings
-      -- are deliberately omitted.
+      -- Scrolling layout: move focus along the tape, reorder whole columns,
+      -- move within a column, change column width, and consume/expel windows.
+      for _, key in ipairs({ "left", "H" }) do
+        hl.bind(mainMod .. " + " .. key, hl.dsp.layout("focus l"), { repeating = true })
+        hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.layout("swapcol l"), { repeating = true })
+      end
+      for _, key in ipairs({ "right", "L" }) do
+        hl.bind(mainMod .. " + " .. key, hl.dsp.layout("focus r"), { repeating = true })
+        hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.layout("swapcol r"), { repeating = true })
+      end
+      for _, key in ipairs({ "up", "K" }) do
+        hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ direction = "up" }), { repeating = true })
+        hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = "up" }), { repeating = true })
+      end
+      for _, key in ipairs({ "down", "J" }) do
+        hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ direction = "down" }), { repeating = true })
+        hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = "down" }), { repeating = true })
+      end
+      hl.bind(mainMod .. " + R", hl.dsp.layout("colresize +conf"))
+      hl.bind(mainMod .. " + minus", hl.dsp.layout("colresize -0.05"), { repeating = true })
+      hl.bind(mainMod .. " + equal", hl.dsp.layout("colresize +0.05"), { repeating = true })
+      hl.bind(mainMod .. " + SHIFT + F", hl.dsp.layout("fit active"))
+      hl.bind(mainMod .. " + bracketleft", hl.dsp.layout("consume_or_expel prev"))
+      hl.bind(mainMod .. " + bracketright", hl.dsp.layout("consume_or_expel next"))
+
+      -- Scratchpad and conventional numbered workspaces.
+      hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("scratchpad"))
+      hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:scratchpad" }))
       for workspace = 1, 10 do
         local key = workspace % 10
-        hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.focus({ workspace = workspace }))
-        hl.bind(mainMod .. " + CTRL + SHIFT + " .. key, hl.dsp.window.move({ workspace = workspace }))
+        hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = workspace }))
+        hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = workspace }))
       end
       hl.bind(mainMod .. " + CTRL + right", hl.dsp.focus({ workspace = "e+1" }))
       hl.bind(mainMod .. " + CTRL + left", hl.dsp.focus({ workspace = "e-1" }))
       hl.bind(mainMod .. " + CTRL + SHIFT + right", hl.dsp.window.move({ workspace = "e+1" }))
       hl.bind(mainMod .. " + CTRL + SHIFT + left", hl.dsp.window.move({ workspace = "e-1" }))
-      hl.bind(mainMod .. " + CTRL + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-      hl.bind(mainMod .. " + CTRL + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
-      hl.bind(mainMod .. " + CTRL + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "e+1" }))
-      hl.bind(mainMod .. " + CTRL + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e-1" }))
+      hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+      hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e-1" }))
+
+      -- Drag floating windows with the mouse and resize any window from a gap.
+      hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+      hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
       -- Route ThinkPad volume and brightness keys through the configured
       -- Noctalia shell instead of relying on standalone helpers.
