@@ -213,6 +213,10 @@ in
       source = "builtin"
       builtin = "Nord"
     '';
+    "xdg/noctalia/15-clock.toml".text = ''
+      [shell]
+      time_format = "{:%H:%M}"
+    '';
     # Keep Noctalia focused on desktop and system controls rather than media.
     # This wins over the built-in defaults while remaining independent of the
     # theme configuration above.
@@ -289,6 +293,7 @@ in
     ".icons/default/index.theme"
     ".config/hypr/hyprland.lua"
     ".config/noctalia/10-theme.toml"
+    ".config/noctalia/15-clock.toml"
     ".config/noctalia/20-no-media.toml"
     ".gtkrc-2.0"
     ".config/gtk-3.0/settings.ini"
