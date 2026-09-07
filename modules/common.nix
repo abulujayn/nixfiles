@@ -85,6 +85,7 @@
 
     zed-editor-fhs
     steam
+    keepassxc
   ];
 
   nixpkgs.config.allowUnfree = true;
