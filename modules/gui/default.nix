@@ -93,6 +93,9 @@ in
   };
 
   environment.sessionVariables = {
+    # Thunar is a GTK application.  Set the theme in its launch environment so
+    # it keeps the Nord dark appearance independently of an Xfce settings daemon.
+    GTK_THEME = "Nordic";
     GTK2_RC_FILES = "/etc/gtk-2.0/gtkrc";
     NOCTALIA_CONFIG_HOME = "/etc/xdg";
     XCURSOR_SIZE = 24;
@@ -217,11 +220,17 @@ in
       [desktop_widgets]
       enabled = false
 
+      [lockscreen_widgets]
+      enabled = false
+
       [widget.media]
       enabled = false
 
       [control_center]
       hidden_tabs = ["media"]
+
+      [osd.kinds]
+      media = false
     '';
     "gtk-2.0/gtkrc".text = ''
       gtk-cursor-theme-name = "Nordzy-cursors"

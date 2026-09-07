@@ -37,7 +37,16 @@
   services.libinput.enable = true;
   services.fwupd.enable = true;
   services.fstrim.enable = true;
-  services.power-profiles-daemon.enable = true;
+  # TLP applies the ThinkPad battery charge thresholds at boot and after
+  # resume. It replaces power-profiles-daemon, which conflicts with TLP.
+  services.power-profiles-daemon.enable = false;
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
 
   security.rtkit.enable = true;
   services.pipewire = {
