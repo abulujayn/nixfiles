@@ -50,6 +50,6 @@
   hardware.enableRedistributableFirmware = true;
   hardware.graphics.enable = true;
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "vmd" "usbhid" "thunderbolt" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" "thinkpad_acpi" ];
 }
