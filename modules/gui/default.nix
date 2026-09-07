@@ -81,6 +81,17 @@ in
     nordzy-icon-theme
   ];
 
+  # Use one patched family throughout the desktop.  Fontconfig also provides
+  # this mapping to applications which do not have a toolkit-specific setting.
+  fonts = {
+    packages = [ pkgs.nerd-fonts.jetbrains-mono ];
+    fontconfig.defaultFonts = {
+      serif = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [ "JetBrainsMono Nerd Font" ];
+      monospace = [ "JetBrainsMono Nerd Font Mono" ];
+    };
+  };
+
   environment.sessionVariables = {
     GTK2_RC_FILES = "/etc/gtk-2.0/gtkrc";
     NOCTALIA_CONFIG_HOME = "/etc/xdg";
@@ -178,19 +189,14 @@ in
       hl.bind(mainMod .. " + CTRL + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "e+1" }))
       hl.bind(mainMod .. " + CTRL + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e-1" }))
 
-      -- Route ThinkPad media keys through the configured Noctalia shell instead
-      -- of relying on extra standalone command-line helpers.
+      -- Route ThinkPad volume and brightness keys through the configured
+      -- Noctalia shell instead of relying on standalone helpers.
       hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(noctalia .. "volume-up"), { locked = true, repeating = true })
       hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(noctalia .. "volume-down"), { locked = true, repeating = true })
       hl.bind("XF86AudioMute", hl.dsp.exec_cmd(noctalia .. "volume-mute"), { locked = true, repeating = true })
       hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(noctalia .. "mic-mute"), { locked = true, repeating = true })
       hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(noctalia .. "brightness-up"), { locked = true, repeating = true })
       hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctalia .. "brightness-down"), { locked = true, repeating = true })
-      hl.bind("XF86AudioNext", hl.dsp.exec_cmd(noctalia .. "media next"), { locked = true })
-      hl.bind("XF86AudioPause", hl.dsp.exec_cmd(noctalia .. "media toggle"), { locked = true })
-      hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(noctalia .. "media toggle"), { locked = true })
-      hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(noctalia .. "media previous"), { locked = true })
-
       hl.on("hyprland.start", function()
         hl.exec_cmd("${lib.getExe config.programs.noctalia.package}")
       end)
@@ -204,9 +210,24 @@ in
       source = "builtin"
       builtin = "Nord"
     '';
+    # Keep Noctalia focused on desktop and system controls rather than media.
+    # This wins over the built-in defaults while remaining independent of the
+    # theme configuration above.
+    "xdg/noctalia/20-no-media.toml".text = ''
+      [desktop_widgets]
+      enabled = false
+
+      [widget.media]
+      enabled = false
+
+      [control_center]
+      hidden_tabs = ["media"]
+    '';
     "gtk-2.0/gtkrc".text = ''
       gtk-cursor-theme-name = "Nordzy-cursors"
       gtk-cursor-theme-size = 24
+      gtk-font-name = "JetBrainsMono Nerd Font 11"
+      gtk-monospace-font-name = "JetBrainsMono Nerd Font Mono 11"
       gtk-icon-theme-name = "Nordzy-dark"
       gtk-theme-name = "Nordic"
     '';
@@ -216,6 +237,8 @@ in
       gtk-application-prefer-dark-theme=true
       gtk-cursor-theme-name=Nordzy-cursors
       gtk-cursor-theme-size=24
+      gtk-font-name=JetBrainsMono Nerd Font 11
+      gtk-monospace-font-name=JetBrainsMono Nerd Font Mono 11
       gtk-icon-theme-name=Nordzy-dark
       gtk-theme-name=Nordic
     '';
@@ -225,8 +248,18 @@ in
       gtk-application-prefer-dark-theme=true
       gtk-cursor-theme-name=Nordzy-cursors
       gtk-cursor-theme-size=24
+      gtk-font-name=JetBrainsMono Nerd Font 11
+      gtk-monospace-font-name=JetBrainsMono Nerd Font Mono 11
       gtk-icon-theme-name=Nordzy-dark
       gtk-interface-color-scheme=2
+    '';
+
+    # qt5ct is the configured Qt platform theme, so make its application
+    # font explicit instead of relying only on Fontconfig's generic mapping.
+    "xdg/qt5ct/qt5ct.conf".text = ''
+      [Fonts]
+      general="JetBrainsMono Nerd Font,11,-1,5,50,0,0,0,0,0"
+      fixed="JetBrainsMono Nerd Font Mono,11,-1,5,50,0,0,0,0,0"
     '';
 
     "xdg/Kvantum/kvantum.kvconfig".text = ''
@@ -247,9 +280,11 @@ in
     ".icons/default/index.theme"
     ".config/hypr/hyprland.lua"
     ".config/noctalia/10-theme.toml"
+    ".config/noctalia/20-no-media.toml"
     ".gtkrc-2.0"
     ".config/gtk-3.0/settings.ini"
     ".config/gtk-4.0/settings.ini"
+    ".config/qt5ct/qt5ct.conf"
     ".config/Kvantum/kvantum.kvconfig"
   ];
 }
