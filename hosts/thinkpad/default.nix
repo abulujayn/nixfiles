@@ -8,6 +8,7 @@
     ./hardware.nix
     ./disk.nix
 
+    ../../modules/console.nix
     ../../modules/gui
     ../../modules/winvm.nix
   ];

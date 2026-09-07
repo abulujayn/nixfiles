@@ -89,6 +89,10 @@ in
 
   services.fprintd.enable = true;
 
+  # Let Hyprland handle a short power-button press so it can open Noctalia's
+  # session menu. logind retains its default long-press emergency handling.
+  services.logind.settings.Login.HandlePowerKey = "ignore";
+
   # Noctalia submits the password to the first PAM prompt. Try pam_unix first
   # so a valid password completes authentication without waiting for a scan;
   # an empty submission falls through to pam_fprintd instead.

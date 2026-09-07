@@ -9,6 +9,11 @@ hl.config({
   general = {
     layout = "scrolling",
   },
+  input = {
+    touchpad = {
+      natural_scroll = true,
+    },
+  },
 })
 
 local mainMod = "SUPER"
@@ -85,14 +90,15 @@ hl.bind(mainMod .. " + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e-1"
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Route ThinkPad volume and brightness keys through the configured
--- Noctalia shell instead of relying on standalone helpers.
+-- Route ThinkPad hardware keys through the configured Noctalia shell instead
+-- of relying on standalone helpers or logind's default power-button action.
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(noctalia .. "volume-up"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(noctalia .. "volume-down"), { locked = true, repeating = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd(noctalia .. "volume-mute"), { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(noctalia .. "mic-mute"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(noctalia .. "brightness-up"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctalia .. "brightness-down"), { locked = true, repeating = true })
+hl.bind("XF86PowerOff", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"), { locked = true })
 hl.on("hyprland.start", function()
   hl.exec_cmd("@noctalia@")
 end)
