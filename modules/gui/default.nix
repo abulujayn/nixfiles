@@ -1,11 +1,6 @@
 { config, inputs, lib, pkgs, username, ... }:
 
 let
-  wallpaperDirectory = pkgs.runCommand "noctalia-wallpapers" { } ''
-    mkdir -p "$out"
-    cp ${./bg.jpg} "$out/bg.jpg"
-  '';
-
   hyprlandLauncher = pkgs.writeShellScriptBin "start-hyprland" ''
     arguments=()
     found_separator=
@@ -127,12 +122,6 @@ in
   };
 
   environment.etc = {
-    # Keep the repository wallpaper as Noctalia's declarative default. The path
-    # is copied into the Nix store, so it remains available after rebuilding.
-    "xdg/noctalia/05-wallpaper.toml".source =
-      pkgs.replaceVars ./config/noctalia/05-wallpaper.toml {
-        inherit wallpaperDirectory;
-      };
     "xdg/hypr/hyprland.lua".source = pkgs.replaceVars ./config/hypr/hyprland.lua {
       hyprland = pkgs.hyprland;
       noctalia = lib.getExe config.programs.noctalia.package;
@@ -165,7 +154,6 @@ in
   system.userFilesCleanup.${username} = [
     ".icons/default/index.theme"
     ".config/hypr/hyprland.lua"
-    ".config/noctalia/05-wallpaper.toml"
     ".config/noctalia/10-theme.toml"
     ".config/noctalia/15-clock.toml"
     ".config/noctalia/20-no-media.toml"

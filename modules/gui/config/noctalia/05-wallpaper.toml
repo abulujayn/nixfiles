@@ -1,5 +1,0 @@
-[wallpaper]
-directory = "@wallpaperDirectory@"
-
-[wallpaper.default]
-path = "@wallpaperDirectory@/bg.jpg"
