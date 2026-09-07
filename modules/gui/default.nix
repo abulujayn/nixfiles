@@ -105,6 +105,12 @@ in
   };
 
   environment.etc = {
+    # Keep the repository wallpaper as Noctalia's declarative default. The path
+    # is copied into the Nix store, so it remains available after rebuilding.
+    "xdg/noctalia/05-wallpaper.toml".text = ''
+      [wallpaper.default]
+      path = "${./bg.jpg}"
+    '';
     "xdg/hypr/hyprland.lua".text = ''
       -- Keep the packaged defaults, but replace their conflicting shortcuts with
       -- the CachyOS layout below.  Hyprland accepts more than one action for a
@@ -303,6 +309,7 @@ in
   system.userFilesCleanup.${username} = [
     ".icons/default/index.theme"
     ".config/hypr/hyprland.lua"
+    ".config/noctalia/05-wallpaper.toml"
     ".config/noctalia/10-theme.toml"
     ".config/noctalia/15-clock.toml"
     ".config/noctalia/20-no-media.toml"
