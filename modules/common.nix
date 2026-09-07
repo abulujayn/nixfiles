@@ -87,4 +87,5 @@
     steam
   ];
 
+  nixpkgs.config.allowUnfree = true;
 }
