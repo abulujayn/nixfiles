@@ -41,6 +41,10 @@ let
       substitute ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop \
         "$out/share/wayland-sessions/hyprland.desktop" \
         --replace-fail ${pkgs.hyprland}/bin/start-hyprland "$out/bin/start-hyprland"
+
+      # This configuration does not enable UWSM. Keep the package's normal
+      # Hyprland session visible without advertising the unmanaged extra entry.
+      rm -f "$out/share/wayland-sessions/hyprland-uwsm.desktop"
     '';
 
     inherit (pkgs.hyprland) version;
@@ -48,7 +52,7 @@ let
       outputsToInstall = [ "out" ];
     };
     passthru = (pkgs.hyprland.passthru or { }) // {
-      inherit (pkgs.hyprland) providedSessions;
+      providedSessions = [ "hyprland" ];
       override = _: hyprland;
     };
   };
