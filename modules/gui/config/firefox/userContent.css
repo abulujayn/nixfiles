@@ -1,0 +1,8 @@
+@import url("arcwtf/userContent.css");
+
+/* Keep ArcWTF's layout, but omit the Arc logo and wordmark. */
+@-moz-document url("about:newtab"), url("about:home") {
+  .logo-and-wordmark {
+    display: none !important;
+  }
+}

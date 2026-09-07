@@ -78,32 +78,10 @@ in
   # Firefox profile layout and chrome are inherently per-user. Preferences and
   # the Firefox package itself are system-wide above.
   system.userFiles.${username} = {
-    ".config/mozilla/firefox/profiles.ini".source = pkgs.writeText "firefox-profiles.ini" ''
-      [General]
-      StartWithLastProfile=1
-      Version=2
-
-      [Profile0]
-      Default=1
-      IsRelative=1
-      Name=default
-      Path=default
-    '';
-
+    ".config/mozilla/firefox/profiles.ini".source = ./config/firefox/profiles.ini;
     "${profile}/chrome/arcwtf".source = arcwtf;
-    "${profile}/chrome/userChrome.css".source = pkgs.writeText "firefox-userChrome.css" ''
-      @import url("arcwtf/userChrome.css");
-    '';
-    "${profile}/chrome/userContent.css".source = pkgs.writeText "firefox-userContent.css" ''
-      @import url("arcwtf/userContent.css");
-
-      /* Keep ArcWTF's layout, but omit the Arc logo and wordmark. */
-      @-moz-document url("about:newtab"), url("about:home") {
-        .logo-and-wordmark {
-          display: none !important;
-        }
-      }
-    '';
+    "${profile}/chrome/userChrome.css".source = ./config/firefox/userChrome.css;
+    "${profile}/chrome/userContent.css".source = ./config/firefox/userContent.css;
   };
 
   system.userFilesCleanup.${username} = [
