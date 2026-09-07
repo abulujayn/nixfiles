@@ -60,7 +60,6 @@ in
 {
   imports = [
     inputs.noctalia-greeter.nixosModules.default
-    ./firefox.nix
     ./kitty.nix
     ./thunar.nix
   ];
@@ -89,6 +88,7 @@ in
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
+    firefox
     nordic
     nordzy-cursor-theme
     nordzy-icon-theme
