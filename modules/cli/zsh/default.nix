@@ -95,6 +95,10 @@
   users.users.${username}.shell = pkgs.zsh;
   environment.pathsToLink = [ "/share/zsh" ];
 
+  system.userFiles.${username} = {
+    ".config/zsh/.zshrc".source = ./zshrc;
+  };
+
   environment.systemPackages = with pkgs; [
     oh-my-zsh
     zsh-autosuggestions
