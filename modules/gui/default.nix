@@ -75,6 +75,8 @@ in
 
   programs.noctalia-greeter.enable = true;
 
+  services.fprintd.enable = true;
+
   environment.systemPackages = with pkgs; [
     nordic
     nordzy-cursor-theme
