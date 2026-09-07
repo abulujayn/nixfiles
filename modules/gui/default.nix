@@ -1,4 +1,4 @@
-{ config, lib, pkgs, username, ... }:
+{ config, inputs, lib, pkgs, username, ... }:
 
 let
   hyprlandLauncher = pkgs.writeShellScriptBin "start-hyprland" ''
@@ -55,6 +55,7 @@ let
 in
 {
   imports = [
+    inputs.noctalia-greeter.nixosModules.default
     ./firefox.nix
     ./kitty.nix
     ./thunar.nix
@@ -71,6 +72,8 @@ in
     systemd.enable = false;
     recommendedServices.enable = true;
   };
+
+  programs.noctalia-greeter.enable = true;
 
   environment.systemPackages = with pkgs; [
     nordic
