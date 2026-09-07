@@ -1,7 +1,7 @@
 { inputs, username }:
 
 let
-  inherit (inputs) nix-darwin nixpkgs;
+  inherit (inputs) nixpkgs;
 
   globalModule = {
     nix.settings.experimental-features = [
@@ -43,29 +43,7 @@ let
       ../hosts/${host}
     ];
   };
-
-  mkDarwinHost = host: nix-darwin.lib.darwinSystem {
-    specialArgs = {
-      inherit inputs username;
-      nixpkgsInput = nixpkgs;
-    };
-
-    modules = [
-      ../modules/user-files.nix
-      globalModule
-      ../modules/cli/git.nix
-      ../modules/cli/zsh
-
-      {
-        networking.hostName = host;
-        networking.computerName = host;
-        networking.localHostName = host;
-      }
-
-      ../hosts/${host}
-    ];
-  };
 in
 {
-  inherit mkHost mkDarwinHost;
+  inherit mkHost;
 }

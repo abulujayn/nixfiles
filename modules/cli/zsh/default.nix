@@ -27,9 +27,6 @@
         typeset -U path cdpath fpath manpath
         HELPDIR="${pkgs.zsh}/share/zsh/$ZSH_VERSION/help"
       '')
-      (lib.mkOrder 525 (lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
-        autoload -U bashcompinit && bashcompinit
-      ''))
       (lib.mkOrder 550 ''
         source ${
           inputs.zsh-completion-generator

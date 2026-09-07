@@ -38,12 +38,7 @@ let
     run_as_user() {
       local managed_user="$1"
       shift
-      ${
-        if pkgs.stdenv.hostPlatform.isDarwin then
-          ''/usr/bin/sudo --user="$managed_user" -- "$@"''
-        else
-          ''${pkgs.util-linux}/bin/runuser -u "$managed_user" -- "$@"''
-      }
+      ${pkgs.util-linux}/bin/runuser -u "$managed_user" -- "$@"
     }
 
     remove_home_manager_link() {
@@ -54,12 +49,7 @@ let
       if [[ -L "$target" ]]; then
         link_target="$(${pkgs.coreutils}/bin/readlink "$target")"
         case "$link_target" in
-          ${
-            if pkgs.stdenv.hostPlatform.isDarwin then
-              "/nix/store/*-home-manager-files/*|/nix/store/*-hm_*)"
-            else
-              "/nix/store/*)"
-          }
+          /nix/store/*)
             run_as_user "$managed_user" ${pkgs.coreutils}/bin/rm -- "$target"
             ;;
         esac
@@ -108,17 +98,9 @@ in
       message = "system.userFiles references undefined user ${user}";
     }) (userFiles // cleanupPaths);
 
-    system.activationScripts =
-      if pkgs.stdenv.hostPlatform.isDarwin then
-        {
-          postActivation.text = lib.mkAfter activation;
-        }
-      else
-        {
-          userFiles = {
-            deps = [ "users" ];
-            text = activation;
-          };
-        };
+    system.activationScripts.userFiles = {
+      deps = [ "users" ];
+      text = activation;
+    };
   };
 }

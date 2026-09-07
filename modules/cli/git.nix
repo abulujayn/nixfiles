@@ -22,18 +22,5 @@
     };
   };
 
-  system.userFiles.${username} = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
-    ".config/gh/config.yml".source = pkgs.writeText "gh-config.yml" ''
-      %YAML 1.1
-      ---
-      aliases: {}
-      editor: ""
-      git_protocol: https
-      version: '1'
-    '';
-  };
-
-  system.userFilesCleanup.${username} =
-    [ ".config/git/config" ]
-    ++ lib.optional pkgs.stdenv.hostPlatform.isLinux ".config/gh/config.yml";
+  system.userFilesCleanup.${username} = [ ".config/git/config" ".config/gh/config.yml" ];
 }

@@ -19,11 +19,6 @@
 
     nixvim.url = "github:nix-community/nixvim";
 
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +34,7 @@
       flake = false;
     };
   };
-  outputs = inputs@{ nixpkgs, nix-darwin, ... }:
+  outputs = inputs@{ nixpkgs, ... }:
     let
       username = "abulujayn";
       hostLib = import ./lib/hosts.nix { inherit inputs username; };
@@ -53,7 +48,5 @@
         "a03"
         "thinkpad"
       ] hostLib.mkHost;
-
-      darwinConfigurations.mbp = hostLib.mkDarwinHost "mbp";
     };
 }

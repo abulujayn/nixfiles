@@ -8,6 +8,12 @@ hl.bind = packaged_bind
 hl.config({
   general = {
     layout = "scrolling",
+    col = {
+      active_border = "rgba(81a1c1ff)",
+    },
+  },
+  decoration = {
+    rounding = 0,
   },
   input = {
     touchpad = {
