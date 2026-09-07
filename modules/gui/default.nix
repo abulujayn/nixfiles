@@ -227,6 +227,15 @@ in
       [lockscreen_widgets]
       enabled = false
 
+      # The login box is part of the lock screen itself, rather than a regular
+      # desktop widget.  Its media row defaults to showing “Nothing Playing”.
+      [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+      type = "login_box"
+      output = "eDP-1"
+
+      [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+      show_media = false
+
       [widget.media]
       enabled = false
 
