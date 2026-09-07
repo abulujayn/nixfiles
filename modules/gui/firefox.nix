@@ -48,7 +48,8 @@ in
       "browser.newtabpage.activity-stream.showWeather" = false;
       "browser.newtabpage.activity-stream.system.showWeather" = false;
       "browser.newtabpage.enabled" = true;
-      "browser.startup.page" = 3;
+      # Start on Firefox Home instead of restoring the previous session.
+      "browser.startup.page" = 1;
       "browser.tabs.closeWindowWithLastTab" = false;
       "browser.tabs.loadInBackground" = true;
       "browser.tabs.warnOnClose" = true;
