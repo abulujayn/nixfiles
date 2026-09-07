@@ -18,7 +18,12 @@ let
       arguments+=( -- --config /etc/xdg/hypr/hyprland.lua )
     fi
 
-    exec ${pkgs.hyprland}/bin/start-hyprland "''${arguments[@]}"
+    # Keep graphical-session.target active for this non-UWSM session.  The
+    # generated fake target is the supported manually-startable owner for it.
+    ${pkgs.systemd}/bin/systemctl --user start nixos-fake-graphical-session.target
+    trap '${pkgs.systemd}/bin/systemctl --user stop nixos-fake-graphical-session.target' EXIT
+
+    ${pkgs.hyprland}/bin/start-hyprland "''${arguments[@]}"
   '';
 
   hyprland = pkgs.symlinkJoin {
@@ -89,10 +94,15 @@ in
 
   environment.systemPackages = with pkgs; [
     firefox
+    keepassxc
     nordic
     nordzy-cursor-theme
     nordzy-icon-theme
+    steam
+    zed-editor
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   # Use one patched family throughout the desktop.  Fontconfig also provides
   # this mapping to applications which do not have a toolkit-specific setting.

@@ -11,10 +11,17 @@
     ../../modules/console.nix
     ../../modules/gui
     ../../modules/winvm.nix
+
+    ./work.nix
   ];
 
   environment.systemPackages = with pkgs; [
+    bubblewrap
+    distrobox
     nodejs_26
     pnpm
   ];
+
+  # Provides flatpak-spawn for distrobox-host-exec.
+  services.flatpak.enable = true;
 }

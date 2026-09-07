@@ -80,13 +80,5 @@
 
     python314
     python314Packages.pip
-
-    distrobox
-
-    zed-editor-fhs
-    steam
-    keepassxc
   ];
-
-  nixpkgs.config.allowUnfree = true;
 }
