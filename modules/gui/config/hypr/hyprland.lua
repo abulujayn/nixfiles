@@ -12,6 +12,12 @@ hl.config({
       active_border = "rgba(81a1c1ff)",
     },
   },
+  -- Keep every new column screen-width.  A second window therefore opens
+  -- beside the first on the scrolling tape instead of shrinking it to 50%.
+  scrolling = {
+    column_width = 1.0,
+    explicit_column_widths = "0.5, 1.0",
+  },
   decoration = {
     rounding = 0,
   },
@@ -69,6 +75,8 @@ for _, key in ipairs({ "down", "J" }) do
   hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = "down" }), { repeating = true })
 end
 hl.bind(mainMod .. " + R", hl.dsp.layout("colresize +conf"))
+hl.bind(mainMod .. " + SHIFT + comma", hl.dsp.layout("colresize 0.5"), { description = "Set column width to half" })
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.layout("colresize 1.0"), { description = "Set column width to full" })
 hl.bind(mainMod .. " + minus", hl.dsp.layout("colresize -0.05"), { repeating = true })
 hl.bind(mainMod .. " + equal", hl.dsp.layout("colresize +0.05"), { repeating = true })
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.layout("fit active"))
