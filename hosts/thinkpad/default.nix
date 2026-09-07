@@ -9,5 +9,6 @@
     ./disk.nix
 
     ../../modules/gui
+    ../../modules/winvm.nix
   ];
 }
