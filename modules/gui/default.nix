@@ -88,12 +88,6 @@ in
   # session menu. logind retains its default long-press emergency handling.
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
-  # Noctalia submits the password to the first PAM prompt. Try pam_unix first
-  # so a valid password completes authentication without waiting for a scan;
-  # an empty submission falls through to pam_fprintd instead.
-  security.pam.services.login.rules.auth.fprintd.order =
-    config.security.pam.services.login.rules.auth.unix.order + 10;
-
   environment.systemPackages = with pkgs; [
     nordic
     nordzy-cursor-theme
@@ -132,6 +126,9 @@ in
     # file lets Noctalia merge it with settings changed through its UI.
     "xdg/noctalia/10-theme.toml".source = ./config/noctalia/10-theme.toml;
     "xdg/noctalia/15-clock.toml".source = ./config/noctalia/15-clock.toml;
+    # Noctalia verifies fingerprints directly via fprintd while retaining its
+    # password entry as the manual fallback.
+    "xdg/noctalia/20-lockscreen-auth.toml".source = ./config/noctalia/20-lockscreen-auth.toml;
     # Keep Noctalia focused on desktop and system controls rather than media.
     # This wins over the built-in defaults while remaining independent of the
     # theme configuration above.
@@ -158,6 +155,7 @@ in
     ".config/noctalia/05-wallpaper.toml"
     ".config/noctalia/10-theme.toml"
     ".config/noctalia/15-clock.toml"
+    ".config/noctalia/20-lockscreen-auth.toml"
     ".config/noctalia/20-no-media.toml"
     ".gtkrc-2.0"
     ".config/gtk-3.0/settings.ini"

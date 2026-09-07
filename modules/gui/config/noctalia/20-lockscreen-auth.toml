@@ -1,0 +1,3 @@
+# Keep the password field available while Noctalia listens for a fingerprint.
+[lockscreen]
+fingerprint = true
