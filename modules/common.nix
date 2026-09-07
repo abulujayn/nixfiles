@@ -74,15 +74,17 @@
     less
     fd
     tree
+    fastfetch
+    btop
+    tmux
 
     python314
     python314Packages.pip
 
-    btop
-    tmux
-
-    fastfetch
     distrobox
+
+    zed-editor-fhs
+    steam
   ];
 
 }
