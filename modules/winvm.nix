@@ -3,8 +3,9 @@
 {
   programs.virt-manager.enable = true;
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
+    dnsmasq
   ];
 
   virtualisation.libvirtd = {
@@ -14,6 +15,8 @@
       swtpm.enable = true;
     };
   };
+
+  networking.firewall.trustedInterfaces = [ "virbr0" ];
 
   # temporary fix as the directory isn't being created by default for some reason
   systemd.tmpfiles.rules = [
