@@ -1,6 +1,11 @@
 { config, inputs, lib, pkgs, username, ... }:
 
 let
+  wallpaperDirectory = pkgs.runCommand "noctalia-wallpapers" { } ''
+    mkdir -p "$out"
+    cp ${./bg.jpg} "$out/bg.jpg"
+  '';
+
   hyprlandLauncher = pkgs.writeShellScriptBin "start-hyprland" ''
     arguments=()
     found_separator=
@@ -108,8 +113,11 @@ in
     # Keep the repository wallpaper as Noctalia's declarative default. The path
     # is copied into the Nix store, so it remains available after rebuilding.
     "xdg/noctalia/05-wallpaper.toml".text = ''
+      [wallpaper]
+      directory = "${wallpaperDirectory}"
+
       [wallpaper.default]
-      path = "${./bg.jpg}"
+      path = "${wallpaperDirectory}/bg.jpg"
     '';
     "xdg/hypr/hyprland.lua".text = ''
       -- Keep the packaged defaults, but replace their conflicting shortcuts with
@@ -150,6 +158,12 @@ in
       end
       dofile("${pkgs.hyprland}/share/hypr/hyprland.lua")
       hl.bind = packaged_bind
+
+      hl.config({
+        general = {
+          layout = "scrolling",
+        },
+      })
 
       local mainMod = "SUPER"
       local noctalia = "noctalia msg "
