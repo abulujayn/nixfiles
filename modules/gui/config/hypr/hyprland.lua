@@ -41,6 +41,14 @@ hl.config({
   },
 })
 
+-- Keep terminals compact by default; every other tiled application inherits
+-- the scrolling layout's full-width (1.0) column setting above.
+hl.window_rule({
+  name = "kitty_starting_width",
+  match = { class = "kitty" },
+  scrolling_width = 0.5,
+})
+
 local mainMod = "SUPER"
 local noctalia = "noctalia msg "
 
