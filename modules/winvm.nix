@@ -1,9 +1,7 @@
 { config, pkgs, username, ... }:
 
 let
-  # This must match the IVSHMEM size in the VM definition. 128 MiB supports
-  # resolutions up to 4K SDR (or 1440p HDR).
-  kvmfrSizeMb = 128;
+  kvmfrSizeMb = 32;
 in
 {
   programs.virt-manager.enable = true;
