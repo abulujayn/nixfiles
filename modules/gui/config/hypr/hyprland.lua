@@ -5,6 +5,11 @@ hl.bind = function() end
 dofile("@hyprland@/share/hypr/hyprland.lua")
 hl.bind = packaged_bind
 
+hl.monitor({
+  output = "eDP-1",
+  scale = 1.25,
+})
+
 hl.config({
   general = {
     layout = "scrolling",

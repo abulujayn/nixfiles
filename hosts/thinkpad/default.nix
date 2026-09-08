@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, username, ... }:
 
 {
   imports = [
@@ -21,6 +21,8 @@
     nodejs_26
     pnpm
   ];
+
+  users.users.${username}.extraGroups = [ "kvm" ];
 
   # Provides flatpak-spawn for distrobox-host-exec.
   services.flatpak.enable = true;
