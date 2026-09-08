@@ -1,9 +1,20 @@
--- Load the packaged non-binding defaults, but start with a completely
--- clean keymap so every active binding is declared below.
+-- Load the packaged defaults, but suppress its automatic monitor rule and
+-- bindings so both are fully declared by this configuration.
 local packaged_bind = hl.bind
+local packaged_monitor = hl.monitor
 hl.bind = function() end
+hl.monitor = function() end
 dofile("@hyprland@/share/hypr/hyprland.lua")
 hl.bind = packaged_bind
+hl.monitor = packaged_monitor
+
+-- Use deterministic 100% scaling for every output.
+hl.monitor({
+  output = "",
+  mode = "preferred",
+  position = "auto",
+  scale = 1.0,
+})
 
 hl.config({
   general = {
