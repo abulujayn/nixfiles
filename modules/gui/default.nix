@@ -127,9 +127,14 @@ in
 
   environment.etc = {
     "xdg/noctalia/05-wallpaper.toml".source = ./config/noctalia/05-wallpaper.toml;
-    "xdg/hypr/hyprland.lua".source = pkgs.replaceVars ./config/hypr/hyprland.lua {
-      hyprland = pkgs.hyprland;
-      noctalia = lib.getExe config.programs.noctalia.package;
+    "xdg/hypr/hyprland.lua" = {
+      source = pkgs.replaceVars ./config/hypr/hyprland.lua {
+        hyprland = pkgs.hyprland;
+        noctalia = lib.getExe config.programs.noctalia.package;
+      };
+      # Hyprland canonicalizes its config path when the session starts. Keep
+      # that path stable across NixOS generations so reloads see new content.
+      mode = "0644";
     };
 
     # Noctalia v5 ships Nord as a built-in palette. Keeping this in a separate

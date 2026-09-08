@@ -8,9 +8,10 @@ dofile("@hyprland@/share/hypr/hyprland.lua")
 hl.bind = packaged_bind
 hl.monitor = packaged_monitor
 
--- Use deterministic 100% scaling for every output.
+-- Use deterministic 100% scaling for the ThinkPad's internal panel. A named
+-- rule takes precedence over Hyprland's automatic fallback monitor rule.
 hl.monitor({
-  output = "",
+  output = "eDP-1",
   mode = "preferred",
   position = "auto",
   scale = 1.0,
@@ -123,7 +124,12 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd(noctalia .. "volume-mute"), { locked = 
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(noctalia .. "mic-mute"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(noctalia .. "brightness-up"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctalia .. "brightness-down"), { locked = true, repeating = true })
-hl.bind("XF86PowerOff", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"), { locked = true })
+-- The physical power switch may be pressed while a Noctalia surface owns an
+-- input inhibitor.  Keep this system control available in that state too.
+hl.bind("XF86PowerOff", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"), {
+  locked = true,
+  dont_inhibit = true,
+})
 hl.on("hyprland.start", function()
   hl.exec_cmd("@noctalia@")
 end)
