@@ -24,10 +24,11 @@ hl.config({
       active_border = "rgba(81a1c1ff)",
     },
   },
-  -- Keep every new column screen-width.  A second window therefore opens
-  -- beside the first on the scrolling tape instead of shrinking it to 50%.
+  -- New columns start screen-width, but a lone column keeps any width chosen
+  -- with the resize bindings instead of being forced back to monitor width.
   scrolling = {
     column_width = 1.0,
+    fullscreen_on_one_column = false,
     explicit_column_widths = "0.5, 1.0",
   },
   decoration = {
@@ -124,11 +125,15 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd(noctalia .. "volume-mute"), { locked = 
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(noctalia .. "mic-mute"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(noctalia .. "brightness-up"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctalia .. "brightness-down"), { locked = true, repeating = true })
--- The physical power switch may be pressed while a Noctalia surface owns an
--- input inhibitor.  Keep this system control available in that state too.
+-- Open Noctalia's session menu immediately on the key-down event.  A long
+-- press remains available to the firmware/logind emergency power handling.
+-- The physical switch may also be pressed while a Noctalia surface owns an
+-- input inhibitor, so keep this system control available in that state too.
 hl.bind("XF86PowerOff", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"), {
   locked = true,
   dont_inhibit = true,
+  long_press = false,
+  release = false,
 })
 hl.on("hyprland.start", function()
   hl.exec_cmd("@noctalia@")
