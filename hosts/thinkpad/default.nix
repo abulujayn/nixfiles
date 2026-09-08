@@ -18,11 +18,7 @@
   environment.systemPackages = with pkgs; [
     bubblewrap
     distrobox
-    nodejs_26
-    pnpm
   ];
-
-  users.users.${username}.extraGroups = [ "kvm" ];
 
   # Provides flatpak-spawn for distrobox-host-exec.
   services.flatpak.enable = true;
