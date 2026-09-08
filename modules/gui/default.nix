@@ -126,7 +126,6 @@ in
   };
 
   environment.etc = {
-    "xdg/noctalia/00-accessibility.toml".source = ./config/noctalia/00-accessibility.toml;
     "xdg/noctalia/05-wallpaper.toml".source = ./config/noctalia/05-wallpaper.toml;
     "xdg/hypr/hyprland.lua" = {
       source = pkgs.replaceVars ./config/hypr/hyprland.lua {
@@ -168,7 +167,6 @@ in
   system.userFilesCleanup.${username} = [
     ".icons/default/index.theme"
     ".config/hypr/hyprland.lua"
-    ".config/noctalia/00-accessibility.toml"
     ".config/noctalia/05-wallpaper.toml"
     ".config/noctalia/10-theme.toml"
     ".config/noctalia/15-clock.toml"
