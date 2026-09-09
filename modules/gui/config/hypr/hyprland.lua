@@ -23,6 +23,7 @@ hl.config({
     column_width = 1.0,
     fullscreen_on_one_column = false,
     explicit_column_widths = "0.5, 1.0",
+    follow_min_visible = 1.0,
   },
   decoration = {
     rounding = 0,
