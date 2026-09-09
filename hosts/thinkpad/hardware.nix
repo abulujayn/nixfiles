@@ -31,9 +31,15 @@
   environment.systemPackages = with pkgs; [
     sbctl
     tpm2-tools
+    libfido2
   ];
 
   hardware.bluetooth.enable = true;
+  # WebAuthn browsers access FIDO2 security keys through hidraw. Give only the
+  # active local login session access, including for non-Yubico authenticators.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="hidraw", KERNEL=="hidraw*", TAG+="uaccess"
+  '';
   services.libinput.enable = true;
   services.fwupd.enable = true;
   services.fstrim.enable = true;

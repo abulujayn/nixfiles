@@ -78,3 +78,21 @@ Boot policy changes, the initrd falls back to the retained passphrase. Firmware
 resets and some firmware or Secure Boot key changes can require TPM
 re-enrollment; remove only the TPM token and repeat the command above rather
 than wiping passphrase slots.
+
+## Use WebAuthn passkeys
+
+The ThinkPad configuration grants the active local session access to FIDO2
+authenticators over USB HID and installs `libfido2` for diagnostics. Firefox
+then handles WebAuthn directly. It does not make the laptop fingerprint reader
+a WebAuthn authenticator; use a FIDO2 security key or another passkey provider.
+
+After switching to a generation containing this configuration, connect the
+passkey authenticator and verify that it is visible:
+
+```console
+fido2-token -L
+```
+
+Register the passkey from the website's security settings in Firefox. Passkey
+credentials remain on the authenticator (or its own synced provider), not in
+this NixOS configuration.
