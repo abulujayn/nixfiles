@@ -49,8 +49,6 @@ in
 {
   imports = [
     inputs.noctalia-greeter.nixosModules.default
-    ./kitty.nix
-    ./thunar.nix
   ];
 
   programs.hyprland = {
