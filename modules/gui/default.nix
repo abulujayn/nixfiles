@@ -78,9 +78,6 @@ in
     kitty
     firefox
     keepassxc
-    nordic
-    nordzy-cursor-theme
-    nordzy-icon-theme
     steam
     zed-editor
   ];
