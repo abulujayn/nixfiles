@@ -15,10 +15,11 @@
 
   environment.systemPackages = with pkgs; [
     distrobox
-
     bubblewrap
   ];
 
   # Provides flatpak-spawn for distrobox-host-exec.
   services.flatpak.enable = true;
+
+  services.ratbagd.enable = true;
 }

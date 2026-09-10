@@ -4,6 +4,14 @@ let
   inherit (inputs) nixpkgs;
 
   globalModule = {
+    nixpkgs.overlays = [
+      (final: prev: {
+        libratbag = prev.callPackage ../packages/libratbag.nix {
+          libratbag = prev.libratbag;
+        };
+      })
+    ];
+
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"
