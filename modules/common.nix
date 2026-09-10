@@ -20,7 +20,11 @@
 
   services.tailscale = {
     enable = true;
-    extraSetFlags = [ "--ssh" ];
+    extraSetFlags = [
+      "--ssh"
+      "--accept-routes"
+      "--operator=${username}"
+    ];
   };
 
   services.openssh = {
