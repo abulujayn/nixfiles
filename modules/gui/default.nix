@@ -77,6 +77,7 @@ in
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
+    kitty
     firefox
     keepassxc
     nordic
@@ -85,6 +86,21 @@ in
     steam
     zed-editor
   ];
+
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [
+      thunar-archive-plugin
+      thunar-media-tags-plugin
+      thunar-volman
+    ];
+  };
+
+  # File previews and transparent access to trash, network shares, and phones.
+  services.tumbler.enable = true;
+  services.gvfs.enable = true;
+
+  xdg.mime.defaultApplications."inode/directory" = [ "thunar.desktop" ];
 
   nixpkgs.config.allowUnfree = true;
 
