@@ -81,18 +81,22 @@ than wiping passphrase slots.
 
 ## Use WebAuthn passkeys
 
-The ThinkPad configuration grants the active local session access to FIDO2
-authenticators over USB HID and installs `libfido2` for diagnostics. Firefox
-then handles WebAuthn directly. It does not make the laptop fingerprint reader
-a WebAuthn authenticator; use a FIDO2 security key or another passkey provider.
+The ThinkPad starts TPM-FIDO in graphical sessions. It presents a virtual FIDO2
+security key to Firefox, keeps passkey private keys in the TPM, and requests
+verification through the fprintd-compatible fingerprint reader. This is
+experimental software rather than a certified platform authenticator, so keep
+an independent physical FIDO2 key registered as a recovery passkey.
 
-After switching to a generation containing this configuration, connect the
-passkey authenticator and verify that it is visible:
+After switching to a generation containing this configuration, log out and back
+in so the `tpm-fido` user service can access its new groups. Enroll a fingerprint
+first if necessary:
 
 ```console
-fido2-token -L
+fprintd-enroll
+systemctl --user status tpm-fido
 ```
 
-Register the passkey from the website's security settings in Firefox. Passkey
-credentials remain on the authenticator (or its own synced provider), not in
-this NixOS configuration.
+Register a new passkey from the website's security settings in Firefox and
+approve the request at the fingerprint reader. Resident-credential metadata is
+stored in `~/.local/share/tpm-fido/credentials.json`; private key material stays
+in the TPM. Existing physical-key passkeys are unaffected.
