@@ -1,5 +1,0 @@
-[shell]
-time_format = "{:%H:%M}"
-# Supply the graphical authorization prompt required when NetworkManager creates
-# or modifies a system-owned Wi-Fi connection.
-polkit_agent = true

@@ -15,9 +15,6 @@ let
       nix-direnv.enable = true;
     };
 
-    system.userFilesCleanup.${username} = [
-      ".config/direnv/lib/hm-nix-direnv.sh"
-    ];
   };
 
   mkHost = host: nixpkgs.lib.nixosSystem {
@@ -28,8 +25,6 @@ let
 
     modules = [
       inputs.nix-index-database.nixosModules.nix-index
-      inputs.nixvim.nixosModules.nixvim
-      ../modules/user-files.nix
       ../modules/nix-index.nix
       globalModule
       ../modules/common.nix

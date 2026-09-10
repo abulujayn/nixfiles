@@ -11,13 +11,12 @@
     ../../modules/console.nix
     ../../modules/gui
     ../../modules/winvm.nix
-
-    ./work.nix
   ];
 
   environment.systemPackages = with pkgs; [
-    bubblewrap
     distrobox
+
+    bubblewrap
   ];
 
   # Provides flatpak-spawn for distrobox-host-exec.

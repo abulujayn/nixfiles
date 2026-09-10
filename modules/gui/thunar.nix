@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, ... }:
 
 {
   programs.thunar = {
@@ -15,13 +15,4 @@
   services.gvfs.enable = true;
 
   xdg.mime.defaultApplications."inode/directory" = [ "thunar.desktop" ];
-
-  # Xfconf treats /etc/xdg as system defaults while keeping runtime changes in
-  # the user's writable Xfconf state.
-  environment.etc."xdg/xfce4/xfconf/xfce-perchannel-xml/thunar.xml".source =
-    ./config/thunar/thunar.xml;
-
-  system.userFilesCleanup.${username} = [
-    ".config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml"
-  ];
 }
