@@ -75,6 +75,8 @@ in
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
+    nordzy-cursor-theme
+
     kitty
     firefox
     keepassxc
