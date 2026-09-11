@@ -21,6 +21,11 @@
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    iloader = {
+      url = "github:nab138/iloader/v2.3.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs@{ nixpkgs, ... }:
     let

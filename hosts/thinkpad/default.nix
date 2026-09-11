@@ -1,6 +1,11 @@
 { inputs, pkgs, ... }:
 
 {
+  nixpkgs.overlays = [
+    (import ../../packages/libratbag.nix)
+    (import ../../packages/iloader.nix { inherit inputs; })
+  ];
+
   imports = [
     inputs.disko.nixosModules.disko
     inputs.lanzaboote.nixosModules.lanzaboote
@@ -16,10 +21,10 @@
   environment.systemPackages = with pkgs; [
     distrobox
     bubblewrap
+    iloader
   ];
 
-  # Provides flatpak-spawn for distrobox-host-exec.
   services.flatpak.enable = true;
-
   services.ratbagd.enable = true;
+  services.usbmuxd.enable = true;
 }

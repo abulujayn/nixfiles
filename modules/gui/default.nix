@@ -65,14 +65,16 @@ in
 
   programs.noctalia-greeter = {
     enable = true;
-    settings.auth.allow_empty_password = true;
+    settings = {
+      auth.allow_empty_password = true;
+
+      output = {
+        name = "eDP-1";
+      };
+    };
   };
 
   services.fprintd.enable = true;
-
-  # Let Hyprland handle a short power-button press so it can open Noctalia's
-  # session menu. logind retains its default long-press emergency handling.
-  services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
     nordzy-cursor-theme
@@ -113,8 +115,6 @@ in
   };
 
   environment.sessionVariables = {
-    # These apply the cursor consistently outside the toolkits configured in
-    # the user's dotfiles, including the compositor and XWayland.
     XCURSOR_SIZE = 24;
     XCURSOR_THEME = "Nordzy-cursors";
   };
@@ -122,6 +122,5 @@ in
   qt = {
     enable = true;
     platformTheme = "qt5ct";
-    style = "kvantum";
   };
 }
