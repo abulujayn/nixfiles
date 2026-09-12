@@ -2,6 +2,7 @@
 
 {
   nixpkgs.overlays = [
+    (import ../../overlays/noctalia.nix)
     (import ../../packages/libratbag.nix)
     (import ../../packages/iloader.nix { inherit inputs; })
   ];
