@@ -71,6 +71,10 @@ in
       output = {
         name = "eDP-1";
       };
+
+      appearance = {
+        hide_logo = true;
+      };
     };
   };
 
