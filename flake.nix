@@ -7,17 +7,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     zsh-completion-generator = {
       url = "github:RobSis/zsh-completion-generator";
       flake = false;
     };
   };
-  outputs = inputs@{ nixpkgs, home-manager, nix-darwin, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, ... }:
     let
       username = "abulujayn";
 
@@ -68,31 +63,10 @@
         ];
       };
 
-      mkDarwinHost = host: nix-darwin.lib.darwinSystem {
-        specialArgs = {
-          inherit inputs username;
-          nixpkgsInput = nixpkgs;
-        };
-
-        modules = [
-          home-manager.darwinModules.home-manager
-          globalModule
-
-          {
-            networking.hostName = host;
-            networking.computerName = host;
-            networking.localHostName = host;
-          }
-
-          ./hosts/${host}/config.nix
-        ];
-      };
     in
     {
       devShells = nixpkgs.lib.genAttrs [
-        "aarch64-darwin"
         "aarch64-linux"
-        "x86_64-darwin"
         "x86_64-linux"
       ] (system: {
         default = nixpkgs.legacyPackages.${system}.mkShell {
@@ -108,7 +82,5 @@
         "a02"
         "a03"
       ] mkHost;
-
-      darwinConfigurations.mbp = mkDarwinHost "mbp";
     };
 }
