@@ -20,11 +20,7 @@
 
   services.tailscale = {
     enable = true;
-    extraSetFlags = [
-      "--ssh"
-      "--accept-routes"
-      "--operator=${username}"
-    ];
+    extraSetFlags = [ "--ssh" ];
   };
 
   services.openssh = {
@@ -67,6 +63,11 @@
     };
   };
 
+  home-manager.users.${username}.home.packages = with pkgs; [
+    fastfetch
+    distrobox
+  ];
+
   environment.systemPackages = with pkgs; [
     wget
     curl
@@ -78,11 +79,12 @@
     less
     fd
     tree
-    fastfetch
-    btop
-    tmux
 
     python314
     python314Packages.pip
+
+    btop
+    tmux
   ];
+
 }

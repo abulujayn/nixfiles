@@ -2,44 +2,113 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.1.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    iloader = {
-      url = "github:nab138/iloader/v2.3.3";
-      inputs.nixpkgs.follows = "nixpkgs";
+    zsh-completion-generator = {
+      url = "github:RobSis/zsh-completion-generator";
+      flake = false;
     };
   };
-  outputs = inputs@{ nixpkgs, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nix-darwin, ... }:
     let
       username = "abulujayn";
-      hostLib = import ./lib/hosts.nix { inherit inputs username; };
+
+      globalModule = { config, ... }: {
+        imports = [
+          ./modules/git.nix
+          ./modules/zsh.nix
+        ];
+
+        nix.settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+
+          users.${username} = {
+            home.stateVersion = "26.05";
+            home.username = username;
+            home.homeDirectory = config.users.users.${username}.home;
+
+            programs.direnv = {
+              enable = true;
+              nix-direnv.enable = true;
+            };
+          };
+        };
+      };
+
+      mkHost = host: nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs username;
+          nixpkgsInput = nixpkgs;
+        };
+
+        modules = [
+          home-manager.nixosModules.home-manager
+          globalModule
+
+          {
+            networking.hostName = host;
+            system.autoUpgrade.flake = "github:abulujayn/nixfiles#${host}";
+          }
+
+          ./hosts/${host}/config.nix
+        ];
+      };
+
+      mkDarwinHost = host: nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          inherit inputs username;
+          nixpkgsInput = nixpkgs;
+        };
+
+        modules = [
+          home-manager.darwinModules.home-manager
+          globalModule
+
+          {
+            networking.hostName = host;
+            networking.computerName = host;
+            networking.localHostName = host;
+          }
+
+          ./hosts/${host}/config.nix
+        ];
+      };
     in
     {
-      devShells = import ./lib/devshells.nix { inherit nixpkgs; };
+      devShells = nixpkgs.lib.genAttrs [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ] (system: {
+        default = nixpkgs.legacyPackages.${system}.mkShell {
+          packages = with nixpkgs.legacyPackages.${system}; [
+            nil
+            nixd
+          ];
+        };
+      });
 
       nixosConfigurations = nixpkgs.lib.genAttrs [
         "a01"
         "a02"
         "a03"
-        "thinkpad"
-      ] hostLib.mkHost;
+      ] mkHost;
+
+      darwinConfigurations.mbp = mkDarwinHost "mbp";
     };
 }
