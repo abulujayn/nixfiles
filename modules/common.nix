@@ -85,6 +85,7 @@
 
     btop
     tmux
+    kitty.terminfo
   ];
 
 }
