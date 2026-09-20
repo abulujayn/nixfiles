@@ -1,4 +1,10 @@
-{ config, nixpkgsInput, lib, ... }:
+{
+  config,
+  nixpkgsInput,
+  lib,
+  settings,
+  ...
+}:
 
 let
   installer = nixpkgsInput.lib.nixosSystem {
@@ -10,7 +16,7 @@ let
         boot.zfs.forceImportRoot = false;
 
         nixpkgs.hostPlatform = config.nixpkgs.hostPlatform.system;
-        system.stateVersion = "26.05";
+        system.stateVersion = settings.stateVersion;
       })
     ];
   };

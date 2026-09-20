@@ -1,4 +1,9 @@
-{ pkgs, username, ... }:
+{
+  pkgs,
+  settings,
+  username,
+  ...
+}:
 
 {
   programs.neovim = {
@@ -24,7 +29,7 @@
     };
 
     root = {
-      home.stateVersion = "26.05";
+      home.stateVersion = settings.stateVersion;
 
       programs.neovim.extraConfig = ''
         set tabstop=2 softtabstop=2 shiftwidth=2

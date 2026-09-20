@@ -1,13 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ./hardware.nix
 
-    ../../modules/common.nix
-    ../../modules/neovim.nix
-    ../../modules/efi-live.nix
-    ../../modules/ts-exitnode.nix
+    ../../modules/roles/server.nix
   ];
 
   environment.systemPackages = with pkgs; [

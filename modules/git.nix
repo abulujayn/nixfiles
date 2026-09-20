@@ -1,4 +1,4 @@
-{ username, ... }:
+{ settings, username, ... }:
 
 {
   home-manager.users.${username}.programs = {
@@ -10,8 +10,8 @@
           "github:"
         ];
         user = {
-          name = username;
-          email = "zaeem@parkar.au";
+          name = settings.user.fullName;
+          email = settings.user.email;
         };
         init.defaultBranch = "main";
       };

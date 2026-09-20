@@ -1,4 +1,9 @@
-{ inputs, pkgs, username, ... }:
+{
+  inputs,
+  pkgs,
+  username,
+  ...
+}:
 
 {
   programs.zsh.enable = true;
@@ -6,7 +11,12 @@
   environment.pathsToLink = [ "/share/zsh" ];
 
   home-manager.users.${username} =
-    { config, lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       imports = [
         ../lib/zsh-options.nix
@@ -62,9 +72,7 @@
 
         extraPlugins = [
           {
-            file =
-              inputs.zsh-completion-generator
-              + "/zsh-completion-generator.plugin.zsh";
+            file = inputs.zsh-completion-generator + "/zsh-completion-generator.plugin.zsh";
             phase = "beforeCompletion";
           }
           {

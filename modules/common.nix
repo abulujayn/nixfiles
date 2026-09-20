@@ -1,37 +1,49 @@
-{ config, lib, pkgs, username, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  settings,
+  username,
+  ...
+}:
 
 {
-  system.stateVersion = "26.05";
+  system.stateVersion = settings.stateVersion;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  time.timeZone = "Australia/Sydney";
-  i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = settings.timeZone;
+  i18n.defaultLocale = settings.locale;
 
-  networking.networkmanager.enable = true;
-  networking.nftables.enable = true;
-  networking.firewall = {
-    enable = true;
-    trustedInterfaces = [ config.services.tailscale.interfaceName ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
-  };
-  services.resolved.enable = true;
-
-  services.tailscale = {
-    enable = true;
-    extraSetFlags = [ "--ssh" ];
-  };
-
-  services.openssh = {
-    enable = true;
-    settings = {
-      KbdInteractiveAuthentication = false;
+  networking = {
+    networkmanager.enable = true;
+    nftables.enable = true;
+    firewall = {
+      enable = true;
+      trustedInterfaces = [ config.services.tailscale.interfaceName ];
+      allowedUDPPorts = [ config.services.tailscale.port ];
     };
-    extraConfig = lib.mkAfter ''
-      Match all
-        PasswordAuthentication no
-    '';
+  };
+
+  services = {
+    resolved.enable = true;
+
+    tailscale = {
+      enable = true;
+      extraSetFlags = [ "--ssh" ];
+    };
+
+    openssh = {
+      enable = true;
+      settings = {
+        KbdInteractiveAuthentication = false;
+      };
+      extraConfig = lib.mkAfter ''
+        Match all
+          PasswordAuthentication no
+      '';
+    };
   };
 
   systemd.services.tailscaled.serviceConfig.Environment = [
@@ -44,7 +56,7 @@
     isNormalUser = true;
     createHome = true;
     linger = true;
-    uid = 1000;
+    uid = settings.user.uid;
     extraGroups = [ "wheel" ];
   };
 
