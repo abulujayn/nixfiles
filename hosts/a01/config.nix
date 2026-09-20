@@ -9,4 +9,8 @@
     ../../modules/efi-live.nix
     ../../modules/ts-exitnode.nix
   ];
+
+  environment.systemPackages = with pkgs; [
+    codex
+  ];
 }
