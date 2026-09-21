@@ -27,17 +27,19 @@
         "x86_64-linux"
       ];
 
-      globalModule = { config, ... }: {
-        imports = [
-          ./modules/git.nix
-          ./modules/zsh.nix
-        ];
+      hosts = {
+        a01 = {
+          modules = [ ];
+        };
+        a02 = {
+          modules = [ ];
+        };
+        a03 = {
+          modules = [ ];
+        };
+      };
 
-        nix.settings.experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
-
+      homeManagerModule = { config, ... }: {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
@@ -57,25 +59,40 @@
         };
       };
 
+      sharedModules = [
+        home-manager.nixosModules.home-manager
+        homeManagerModule
+        ./modules/system-base.nix
+        ./modules/networking.nix
+        ./modules/openssh.nix
+        ./modules/tailscale.nix
+        ./modules/nix-maintenance.nix
+        ./modules/user-environment.nix
+        ./modules/recovery-boot.nix
+        ./modules/git.nix
+        ./modules/neovim.nix
+        ./modules/zsh.nix
+      ];
+
       mkHost =
-        host:
+        hostname: host:
         nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs settings username;
             nixpkgsInput = nixpkgs;
           };
 
-          modules = [
-            home-manager.nixosModules.home-manager
-            globalModule
+          modules =
+            sharedModules
+            ++ [
+            ./hosts/${hostname}/hardware.nix
 
             {
-              networking.hostName = host;
-              system.autoUpgrade.flake = "github:abulujayn/nixfiles#${host}";
+              networking.hostName = hostname;
+              system.autoUpgrade.flake = "github:abulujayn/nixfiles#${hostname}";
             }
-
-            ./hosts/${host}/config.nix
-          ];
+          ]
+            ++ host.modules;
         };
 
     in
@@ -117,10 +134,6 @@
         };
       });
 
-      nixosConfigurations = nixpkgs.lib.genAttrs [
-        "a01"
-        "a02"
-        "a03"
-      ] mkHost;
+      nixosConfigurations = nixpkgs.lib.mapAttrs mkHost hosts;
     };
 }

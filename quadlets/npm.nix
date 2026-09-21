@@ -9,34 +9,32 @@ let
   cfg = config.quadlets.npm;
 in
 {
+  imports = [ ../modules/podman.nix ];
+
   options.quadlets.npm.publishAddress = lib.mkOption {
     type = lib.types.str;
     default = "0.0.0.0";
     description = "Address on which Nginx Proxy Manager publishes ports 80 and 443.";
   };
 
-  config.services.podman = {
-    enable = true;
+  config.services.podman.containers.npm = {
+    description = "Nginx Proxy Manager container";
+    image = "docker.io/jc21/nginx-proxy-manager";
+    autoStart = true;
 
-    containers.npm = {
-      description = "Nginx Proxy Manager container";
-      image = "docker.io/jc21/nginx-proxy-manager";
-      autoStart = true;
+    ports = [
+      "${cfg.publishAddress}:80:80"
+      "${cfg.publishAddress}:443:443"
+      "127.0.0.1:2777:81"
+    ];
+    volumes = [
+      "${config.users.users.${username}.home}/.config/containers/data/npm/data/:/data:Z"
+      "${config.users.users.${username}.home}/.config/containers/data/npm/letsencrypt/:/etc/letsencrypt:Z"
+    ];
 
-      ports = [
-        "${cfg.publishAddress}:80:80"
-        "${cfg.publishAddress}:443:443"
-        "127.0.0.1:2777:81"
-      ];
-      volumes = [
-        "${config.users.users.${username}.home}/.config/containers/data/npm/data/:/data:Z"
-        "${config.users.users.${username}.home}/.config/containers/data/npm/letsencrypt/:/etc/letsencrypt:Z"
-      ];
-
-      extraConfig.Container = {
-        HealthCmd = "curl -fSs http://localhost:81/";
-        Pull = "missing";
-      };
+    extraConfig.Container = {
+      HealthCmd = "curl -fSs http://localhost:81/";
+      Pull = "missing";
     };
   };
 }
