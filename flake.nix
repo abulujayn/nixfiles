@@ -66,7 +66,7 @@
         ./modules/networking.nix
         ./modules/openssh.nix
         ./modules/tailscale.nix
-        ./modules/podman.nix
+        ./modules/virtualisation.nix
         ./modules/nix-maintenance.nix
         ./modules/user-environment.nix
         ./modules/recovery-boot.nix

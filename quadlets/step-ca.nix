@@ -4,7 +4,7 @@ let
   cfg = config.quadlets.step-ca;
 in
 {
-  imports = [ ../modules/podman.nix ];
+  imports = [ ../modules/virtualisation.nix ];
 
   options.quadlets.step-ca.publishAddress = lib.mkOption {
     type = lib.types.str;

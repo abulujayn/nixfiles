@@ -9,7 +9,7 @@ let
   cfg = config.quadlets.npm;
 in
 {
-  imports = [ ../modules/podman.nix ];
+  imports = [ ../modules/virtualisation.nix ];
 
   options.quadlets.npm.publishAddress = lib.mkOption {
     type = lib.types.str;
